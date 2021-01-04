@@ -4,11 +4,9 @@
  * @author Nawab Ali
  */
 
-#include "nand.h"
 #include "exor.h"
 #include "monitor.h"
 #include "stimulus.h"
-#include <iostream>
 #include <systemc.h>
 
 using namespace std;

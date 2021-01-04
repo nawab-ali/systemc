@@ -19,7 +19,7 @@ SC_MODULE (nand) {
 		sensitive << input_1 << input_2;
 	}
 
-	void compute_nand(void) {
+	void compute_nand() {
 		output.write(!(input_1.read() && input_2.read()));
 	}
 };
