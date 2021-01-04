@@ -9,8 +9,6 @@
 #include "stimulus.h"
 #include <systemc.h>
 
-using namespace std;
-
 int sc_main(int argc, char** argv) {
 	sc_signal<bool> input_signal_1;
 	sc_signal<bool> input_signal_2;
