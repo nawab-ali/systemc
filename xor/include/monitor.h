@@ -24,7 +24,7 @@ SC_MODULE (monitor) {
 		sensitive << clk.pos();
 	}
 
-	void monitor_dut(void) {
+	void monitor_dut() {
 		cout << setw(10) << "Time\t";
 	 	cout << setw(2) << "input_1\t";
 		cout << setw(2) << "input_2\t";

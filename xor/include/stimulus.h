@@ -19,7 +19,7 @@ SC_MODULE (stimulus) {
 		sensitive << clk.pos();
 	}
 
-	void generate_stimuli(void) {
+	void generate_stimuli() {
 		output_1.write(false);
 		output_2.write(false);
 		wait();
