@@ -9,12 +9,12 @@
 
 #include <systemc.h>
 
-SC_MODULE (stimulus) {
+SC_MODULE(stimulus) {
 	sc_in<bool> clk;
 	sc_out<bool> output_1;
 	sc_out<bool> output_2;
 
-	SC_CTOR (stimulus) {
+	SC_CTOR(stimulus) {
 		SC_THREAD(generate_stimuli);
 		sensitive << clk.pos();
 	}
