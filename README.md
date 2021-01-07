@@ -1,2 +1,3 @@
 SystemC Projects
-1. xor: Implement XOR gate using NAND gates
+1. and: Implement AND gate
+2. xor: Implement XOR gate using NAND gates
