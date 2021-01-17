@@ -1,5 +1,5 @@
 /**
- * @file main.h
+ * @file main.cpp
  * @brief This file implements the main thread of execution.
  * @author Nawab Ali
  */
