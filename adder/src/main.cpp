@@ -19,7 +19,7 @@ sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& a, sc_signal<
     return fp;
 }
 
-int sc_main(int argc, char** argv) {
+void simulate_half_adder() {
     sc_trace_file* fp;
     sc_signal<bool> a, b;
     sc_signal<bool> sum, carry;
@@ -37,6 +37,9 @@ int sc_main(int argc, char** argv) {
     fp = create_vcd_trace("half_adder", a, b, sum, carry);
     sc_start(5, SC_NS);
     sc_close_vcd_trace_file(fp);
+}
 
+int sc_main(int argc, char** argv) {
+    simulate_half_adder();
     return 0;
 }
