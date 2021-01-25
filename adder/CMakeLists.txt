@@ -9,7 +9,9 @@ include_directories(${CMAKE_PREFIX_PATH}/include)
 find_library(systemc systemc ${CMAKE_PREFIX_PATH}/lib)
 link_directories(${CMAKE_PREFIX_PATH}/lib)
 
-# Main executable
+# Executables
 include_directories(include)
-add_executable(adder src/main.cpp)
-target_link_libraries(adder systemc)
+add_executable(half_adder src/half_adder_sim.cpp)
+add_executable(full_adder src/full_adder_sim.cpp)
+target_link_libraries(half_adder systemc)
+target_link_libraries(full_adder systemc)
