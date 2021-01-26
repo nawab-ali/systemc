@@ -8,7 +8,8 @@
 #include "half_adder.h"
 #include "half_adder_tb.h"
 
-sc_trace_file* create_half_adder_vcd_trace(const char* file, sc_signal<bool>& a, sc_signal<bool>& b, sc_signal<bool>& sum, sc_signal<bool>& carry) {
+sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& a, sc_signal<bool>& b, sc_signal<bool>& sum,
+                                sc_signal<bool>& carry) {
     sc_trace_file* fp = sc_create_vcd_trace_file(file);
 
     sc_trace(fp, a, "a");
@@ -34,7 +35,7 @@ void simulate_half_adder() {
     ha_tb.a(a);
     ha_tb.b(b);
 
-    fp = create_half_adder_vcd_trace("half_adder", a, b, sum, carry);
+    fp = create_vcd_trace("half_adder", a, b, sum, carry);
     sc_start(5, SC_NS);
     sc_close_vcd_trace_file(fp);
 }

@@ -8,7 +8,8 @@
 #include "full_adder.h"
 #include "full_adder_tb.h"
 
-sc_trace_file* create_full_adder_vcd_trace(const char* file, sc_signal<bool>& a, sc_signal<bool>& b, sc_signal<bool>& c_in, sc_signal<bool>& sum, sc_signal<bool>& c_out) {
+sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& a, sc_signal<bool>& b, sc_signal<bool>& c_in,
+                                sc_signal<bool>& sum, sc_signal<bool>& c_out) {
     sc_trace_file* fp = sc_create_vcd_trace_file(file);
 
     sc_trace(fp, a, "a");
@@ -37,7 +38,7 @@ void simulate_full_adder() {
     fa_tb.b(b);
     fa_tb.c_in(c_in);
 
-    fp = create_full_adder_vcd_trace("full_adder", a, b, c_in, sum, c_out);
+    fp = create_vcd_trace("full_adder", a, b, c_in, sum, c_out);
     sc_start(10, SC_NS);
     sc_close_vcd_trace_file(fp);
 }
