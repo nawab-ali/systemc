@@ -4,8 +4,8 @@
  * @author Nawab Ali
  */
 
-#ifndef FULL_ADDER_TB
-#define FULL_ADDER_TB
+#ifndef FULL_ADDER_TB_H
+#define FULL_ADDER_TB_H
 
 #include <systemc.h>
 #include "full_adder.h"
@@ -33,4 +33,4 @@ SC_MODULE (full_adder_tb) {
     }
 };
 
-#endif //FULL_ADDER_TB
+#endif //FULL_ADDER_TB_H
