@@ -12,7 +12,7 @@
 
 SC_MODULE (four_bit_adder_tb) {
     sc_out<bool> c_in;
-    sc_out<sc_uint<4>> a, b;
+    sc_out<sc_lv<4>> a, b;
 
     SC_CTOR (four_bit_adder_tb) {
         SC_THREAD(stimulate);
@@ -20,13 +20,18 @@ SC_MODULE (four_bit_adder_tb) {
 
     void stimulate() {
         c_in = 0;
-        sc_uint<4> input = 0;
 
-        while (input <= 15) {
-            a = b = input;
-            wait(1, SC_NS);
-            input++;
-        }
+        a = "0000";
+        b = "0000";
+        wait(1, SC_NS);
+
+        a = "0010";
+        b = "0110";
+        wait(1, SC_NS);
+
+        a = "1111";
+        b = "1111";
+        wait(1, SC_NS);
 
         sc_stop();
     }
