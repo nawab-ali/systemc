@@ -19,7 +19,7 @@ sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& clk, sc_signa
     sc_trace(fp, din, "din");
     sc_trace(fp, dout, "dout");
 
-    return(fp);
+    return fp;
 }
 
 void simulate(sc_signal<bool>& din) {
@@ -42,12 +42,12 @@ int sc_main(int argc, char** argv) {
     sc_signal<bool> dout;
     sc_clock clk("clk", 10, SC_NS, 0.5);
 
-    d_ff d_ff_1("d_ff");
+    d_ff d_ff_1("d_ff_1");
     d_ff_1.clk(clk);
     d_ff_1.din(din);
     d_ff_1.dout(dout);
 
-    fp = create_vcd_trace("d_ff_wave",clk, din, dout);
+    fp = create_vcd_trace("d_ff", clk, din, dout);
     simulate(din);
 
     sc_stop();
