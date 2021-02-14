@@ -1,6 +1,6 @@
 /**
- * @file main.cpp
- * @brief This file implements the main thread of execution.
+ * @file d_ff_sim.cpp
+ * @brief This file simulates the D Flip-Flop.
  * @author Nawab Ali
  */
 
@@ -10,7 +10,7 @@
 
 using namespace std;
 
-sc_trace_file* create_vcd_trace(sc_signal<bool>& clk, sc_signal<bool>& din, sc_signal<bool>& dout, const char* file) {
+sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& clk, sc_signal<bool>& din, sc_signal<bool>& dout) {
     sc_trace_file *fp;
 
     fp = sc_create_vcd_trace_file(file);
@@ -47,7 +47,7 @@ int sc_main(int argc, char** argv) {
     d_ff_1.din(din);
     d_ff_1.dout(dout);
 
-    fp = create_vcd_trace(clk, din, dout, "d_ff_wave");
+    fp = create_vcd_trace("d_ff_wave",clk, din, dout);
     simulate(din);
 
     sc_stop();
