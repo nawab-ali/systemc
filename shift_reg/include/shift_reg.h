@@ -14,9 +14,10 @@ SC_MODULE (shift_reg) {
     sc_in<bool> clk, din;
     sc_out<bool> r0, r1, r2, r3;
     d_ff dff0, dff1, dff2, dff3;
-    sc_signal<bool> s0, s1, s2, s3;
+    sc_signal<bool> s0, s1, s2;
 
     SC_CTOR (shift_reg) : dff0("dff0"), dff1("dff1"), dff2("dff2"), dff3("dff3") {
+        cout << "Constructing shift_reg " << name() << endl;
         SC_METHOD(shift);
         sensitive << clk.pos();
     }
@@ -37,12 +38,12 @@ SC_MODULE (shift_reg) {
 
         dff3.clk(clk);
         dff3.din(s2);
-        dff3.dout(s3);
+        dff3.dout(r3);
 
         r0 = s0;
         r1 = s1;
         r2 = s2;
-        r3 = s3;
+
         cout << "shift: end" << endl;
     }
 };

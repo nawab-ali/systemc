@@ -15,6 +15,7 @@ SC_MODULE (d_ff) {
     sc_out<bool> dout;
 
     SC_CTOR (d_ff) {
+        cout << "Constructing d_ff " << name() << endl;
         SC_METHOD(assign);
         sensitive << clk.pos();
     }

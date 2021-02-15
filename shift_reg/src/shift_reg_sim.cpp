@@ -43,11 +43,12 @@ void simulate_shift_reg() {
     sr.r2(r2);
     sr.r3(r3);
 
+    sr_tb.clk(clk);
     sr_tb.din(din);
 
     cout << "simulate_shift_reg: end 1" << endl;
     fp = create_vcd_trace("shift_reg", clk, din, r0, r1, r2, r3);
-    sc_start(100, SC_NS);
+    sc_start();
     sc_close_vcd_trace_file(fp);
 
     cout << "simulate_shift_reg: end" << endl;

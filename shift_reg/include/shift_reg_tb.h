@@ -10,26 +10,29 @@
 #include <systemc.h>
 
 SC_MODULE (shift_reg_tb) {
+    sc_in<bool> clk;
     sc_out<bool> din;
 
     SC_CTOR (shift_reg_tb) {
+        cout << "Constructing shift_reg_tb " << name() << endl;
         SC_THREAD(generate_stimuli);
+        sensitive << clk.pos();
     }
 
     void generate_stimuli() {
         cout << "generate_stimuli: begin" << endl;
 
         din.write(1);
-        wait(10, SC_NS);
+        wait();
 
         din.write(0);
-        wait(10, SC_NS);
+        wait();
 
         din.write(1);
-        wait(10, SC_NS);
+        wait();
 
         din.write(0);
-        wait(10, SC_NS);
+        wait();
 
         cout << "generate_stimuli: end 1" << endl;
         sc_stop();
