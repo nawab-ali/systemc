@@ -13,13 +13,13 @@
 
 using namespace std;
 
-SC_MODULE(monitor) {
+SC_MODULE (monitor) {
     sc_in<bool> clk;
     sc_in<bool> input_1;
     sc_in<bool> input_2;
     sc_in<bool> input_3;
 
-    SC_CTOR(monitor) {
+    SC_CTOR (monitor) {
         SC_THREAD(monitor_dut);
         sensitive << clk.pos();
     }
@@ -30,7 +30,7 @@ SC_MODULE(monitor) {
         cout << setw(2) << "input_2" << "\t";
         cout << setw(2) << "output" << endl;
 
-        while(true) {
+        while (true) {
             cout << setw(10) << sc_time_stamp() << "\t";
             cout << setw(2) << input_1.read() << "\t";
             cout << setw(2) << input_2.read() << "\t";
