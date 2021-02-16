@@ -20,6 +20,7 @@ SC_MODULE (shift_reg_tb) {
     }
 
     void generate_stimuli() {
+        wait();
         cout << "generate_stimuli: begin" << endl;
 
         din.write(1);

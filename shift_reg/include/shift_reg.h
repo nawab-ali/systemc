@@ -18,11 +18,11 @@ SC_MODULE (shift_reg) {
 
     SC_CTOR (shift_reg) : dff0("dff0"), dff1("dff1"), dff2("dff2"), dff3("dff3") {
         cout << "Constructing shift_reg " << name() << endl;
-        SC_METHOD(shift);
+        SC_METHOD(shift_right);
         sensitive << clk.pos();
     }
 
-    void shift() {
+    void shift_right() {
         cout << "shift: begin" << endl;
         dff0.clk(clk);
         dff0.din(din);
