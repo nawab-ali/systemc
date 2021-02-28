@@ -16,6 +16,7 @@ SC_MODULE (shift_reg_tb) {
     SC_CTOR (shift_reg_tb) {
         cout << "Constructing shift_reg_tb " << name() << endl;
         SC_THREAD(generate_stimuli);
+        dont_initialize();
         sensitive << clk.pos();
     }
 
