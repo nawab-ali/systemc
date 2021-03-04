@@ -20,16 +20,18 @@ SC_MODULE (counter_tb) {
     }
 
     void gen_stimuli() {
+        wait();
+
+        reset = 1;
+        wait();
+
+        reset = 0;
+        enable = 1;
         for (int i = 0; i < 5; ++i) {
             wait();
-            reset = 0;
-            enable = 1;
         }
 
-        wait();
         reset = 1;
-        enable = 1;
-
         wait();
 
         sc_stop();
