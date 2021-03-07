@@ -5,12 +5,10 @@
  */
 
 #include "d_ff.h"
-#include <iostream>
+#include "d_ff_tb.h"
 #include <systemc.h>
 
-using namespace std;
-
-sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& clk, sc_signal<bool>& din, sc_signal<bool>& dout) {
+sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<bool>& din, sc_signal<bool>& dout) {
     sc_trace_file *fp;
 
     fp = sc_create_vcd_trace_file(file);
@@ -22,21 +20,7 @@ sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& clk, sc_signa
     return fp;
 }
 
-void simulate(sc_signal<bool>& din) {
-    din = false;
-    sc_start(31, SC_NS);
-    cout << "din = " << din << " time = " << sc_time_stamp() << endl;
-
-    din = true;
-    sc_start(31, SC_NS);
-    cout << "din = " << din << " time = " << sc_time_stamp() << endl;
-
-    din = false;
-    sc_start(31, SC_NS);
-    cout << "din = " << din << " time = " << sc_time_stamp() << endl;
-}
-
-int sc_main(int argc, char** argv) {
+void simulate() {
     sc_trace_file *fp;
     sc_signal<bool> din;
     sc_signal<bool> dout;
@@ -47,11 +31,16 @@ int sc_main(int argc, char** argv) {
     d_ff_1.din(din);
     d_ff_1.dout(dout);
 
+    d_ff_tb d_ff_tb("d_ff_tb");
+    d_ff_tb.clk(clk);
+    d_ff_tb.din(din);
+
     fp = create_vcd_trace("d_ff", clk, din, dout);
-    simulate(din);
-
-    sc_stop();
+    sc_start(500, SC_NS);
     sc_close_vcd_trace_file(fp);
+}
 
+int sc_main(int argc, char** argv) {
+    simulate();
     return 0;
 }
