@@ -41,9 +41,9 @@ SC_MODULE (shift_reg) {
         dff3.din(s2);
         dff3.dout(r3);
 
-        r0 = s0;
-        r1 = s1;
-        r2 = s2;
+        r0.write(s0);
+        r1.write(s1);
+        r2.write(s2);
 
         cout << "shift: end" << endl;
     }

@@ -7,7 +7,7 @@
 #include "shift_reg.h"
 #include "shift_reg_tb.h"
 
-sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& clk, sc_signal<bool>& din, sc_signal<bool>& r0,
+sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<bool>& din, sc_signal<bool>& r0,
                                 sc_signal<bool>& r1, sc_signal<bool>& r2, sc_signal<bool>& r3) {
     cout << "create_vcd_trace: begin" << endl;
 
