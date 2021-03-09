@@ -15,6 +15,7 @@ SC_MODULE (vector2bits) {
 
     SC_CTOR (vector2bits) {
         SC_METHOD(convert);
+        dont_initialize();
         sensitive << input;
     }
 
@@ -34,6 +35,7 @@ SC_MODULE (bits2vector) {
 
     SC_CTOR (bits2vector) {
         SC_METHOD(convert);
+        dont_initialize();
         sensitive << i0 << i1 << i2 << i3;
     }
 

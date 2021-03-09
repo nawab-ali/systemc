@@ -11,27 +11,31 @@
 #include "four_bit_adder.h"
 
 SC_MODULE (four_bit_adder_tb) {
+    sc_in<bool> clk;
     sc_out<bool> c_in;
     sc_out<sc_lv<4>> a, b;
 
     SC_CTOR (four_bit_adder_tb) {
-        SC_THREAD(stimulate);
+        SC_THREAD(gen_stimuli);
+        dont_initialize();
+        sensitive << clk.pos();
     }
 
-    void stimulate() {
+    void gen_stimuli() {
+        wait();
         c_in = 0;
 
         a = "0000";
         b = "0000";
-        wait(1, SC_NS);
+        wait(11, SC_NS);
 
         a = "0010";
         b = "0110";
-        wait(1, SC_NS);
+        wait(11, SC_NS);
 
         a = "1111";
         b = "1111";
-        wait(1, SC_NS);
+        wait(11, SC_NS);
 
         sc_stop();
     }

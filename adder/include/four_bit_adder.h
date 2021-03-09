@@ -21,14 +21,20 @@ SC_MODULE (four_bit_adder) {
     sc_out<bool> b0, b1, b2, b3;
 
     full_adder fa0, fa1, fa2, fa3;
+    vector2bits v2b_a, v2b_b;
+    bits2vector b2v_sum;
+
     sc_signal<bool> c1, c2, c3;
     sc_signal<bool> s0, s1, s2, s3;
 
-    SC_CTOR (four_bit_adder) : fa0("full_adder_0"), fa1("full_adder_1"), fa2("full_adder_2"), fa3("full_adder_3") {
+    SC_CTOR (four_bit_adder) : fa0("full_adder_0"), fa1("full_adder_1"), fa2("full_adder_2"), fa3("full_adder_3"),
+                               v2b_a("vector2bits_a"), v2b_b("vector2bits_b"), b2v_sum("bits2vector_sum") {
         SC_METHOD(read_inputs);
+        dont_initialize();
         sensitive << a << b;
 
         SC_METHOD(generate_sum);
+        dont_initialize();
         sensitive << s0 << s1 << s2 << s3;
 
         fa0.a(a0);
@@ -57,8 +63,6 @@ SC_MODULE (four_bit_adder) {
     }
 
     void read_inputs() {
-        vector2bits v2b_a("vector2bits_a"), v2b_b("vector2bits_b");
-
         v2b_a.input(a);
         v2b_a.o0(a0);
         v2b_a.o1(a1);
@@ -73,8 +77,6 @@ SC_MODULE (four_bit_adder) {
     }
 
     void generate_sum() {
-        bits2vector b2v_sum("bits2vector_sum");
-
         b2v_sum.i0(s0);
         b2v_sum.i1(s1);
         b2v_sum.i2(s2);
