@@ -1,6 +1,6 @@
 /**
  * @file d_ff_sim.cpp
- * @brief This file simulates the D Flip-Flop.
+ * @brief This file simulates a D Flip-Flop.
  * @author Nawab Ali
  */
 

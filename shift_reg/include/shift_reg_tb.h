@@ -14,7 +14,6 @@ SC_MODULE (shift_reg_tb) {
     sc_out<bool> din;
 
     SC_CTOR (shift_reg_tb) {
-        cout << "Constructing shift_reg_tb " << name() << endl;
         SC_THREAD(generate_stimuli);
         dont_initialize();
         sensitive << clk.pos();
@@ -22,7 +21,6 @@ SC_MODULE (shift_reg_tb) {
 
     void generate_stimuli() {
         wait(11, SC_NS);
-        cout << "generate_stimuli: begin" << endl;
 
         din.write(0);
         wait(15, SC_NS);
@@ -36,9 +34,7 @@ SC_MODULE (shift_reg_tb) {
         din.write(1);
         wait(15, SC_NS);
 
-        cout << "generate_stimuli: end 1" << endl;
         sc_stop();
-        cout << "generate_stimuli: end 2" << endl;
     }
 };
 

@@ -17,14 +17,10 @@ SC_MODULE (shift_reg) {
     sc_signal<bool> s0, s1, s2;
 
     SC_CTOR (shift_reg) : dff0("dff0"), dff1("dff1"), dff2("dff2"), dff3("dff3") {
-        cout << "Constructing shift_reg " << name() << endl;
         SC_METHOD(shift_right);
         dont_initialize();
-        sensitive << clk.pos();
-    }
+        sensitive << s0 << s1 << s2;
 
-    void shift_right() {
-        cout << "shift: begin" << endl;
         dff0.clk(clk);
         dff0.din(din);
         dff0.dout(s0);
@@ -40,12 +36,12 @@ SC_MODULE (shift_reg) {
         dff3.clk(clk);
         dff3.din(s2);
         dff3.dout(r3);
+    }
 
+    void shift_right() {
         r0.write(s0);
         r1.write(s1);
         r2.write(s2);
-
-        cout << "shift: end" << endl;
     }
 };
 
