@@ -22,16 +22,16 @@ SC_MODULE (shift_reg_tb) {
     void generate_stimuli() {
         wait(11, SC_NS);
 
-        din.write(0);
-        wait(15, SC_NS);
-
         din.write(1);
         wait(15, SC_NS);
 
         din.write(0);
         wait(15, SC_NS);
 
-        din.write(1);
+        din.write(0);
+        wait(15, SC_NS);
+
+        din.write(0);
         wait(15, SC_NS);
 
         sc_stop();
