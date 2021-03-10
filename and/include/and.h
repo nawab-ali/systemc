@@ -9,12 +9,12 @@
 
 #include <systemc.h>
 
-SC_MODULE(and2) {
+SC_MODULE (and2) {
     sc_in<bool> input_1;
     sc_in<bool> input_2;
     sc_out<bool> output;
 
-    SC_CTOR(and2) {
+    SC_CTOR (and2) {
         SC_METHOD(compute_and);
         sensitive << input_1 << input_2;
     }
