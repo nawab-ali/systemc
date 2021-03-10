@@ -1,6 +1,6 @@
 SystemC Projects
-1. and: AND gate
-2. xor: XOR gate using NAND gates
-3. d_ff: D Flip-Flop
-4. adder: Half-adder, Full-adder
-5. counter: 4-bit counter
+1. adder: half-adder, full-adder
+2. and: AND gate
+3. counter: 4-bit counter
+4. shift-reg: 4-bit shift register
+5. xor: XOR gate using NAND gates
