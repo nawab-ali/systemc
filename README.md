@@ -2,7 +2,7 @@
 
 **1. adder: half-adder, full-adder**
 
-<img src="https://user-images.githubusercontent.com/42716711/110702187-0e0a2700-81a7-11eb-8a78-19f0a8ae68cf.png" width="450" height="150">
+<img src="https://user-images.githubusercontent.com/42716711/110702187-0e0a2700-81a7-11eb-8a78-19f0a8ae68cf.png" width="400" height="150">
 
 
 **2. and: AND gate**
