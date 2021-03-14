@@ -11,15 +11,19 @@
 
 sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool> a[4], sc_signal<bool> b[4],
                                 sc_signal<bool>& c_in, sc_signal<bool> sum[4], sc_signal<bool>& c_out) {
+    char name[8];
     sc_trace_file* fp = sc_create_vcd_trace_file(file);
 
     sc_trace(fp, c_in, "c_in");
     sc_trace(fp, c_out, "c_out");
 
     for (int i = 0; i < 4; ++i) {
-        sc_trace(fp, a[i], "a");
-        sc_trace(fp, b[i], "b");
-        sc_trace(fp, sum[i], "sum");
+        snprintf(name, 8, "%s%d", "a", i);
+        sc_trace(fp, a[i], name);
+        snprintf(name, 8, "%s%d", "b", i);
+        sc_trace(fp, b[i], name);
+        snprintf(name, 8, "%s%d", "sum", i);
+        sc_trace(fp, sum[i], name);
     }
 
     return fp;

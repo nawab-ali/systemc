@@ -23,17 +23,21 @@ SC_MODULE (four_bit_adder_tb) {
 
     void gen_stimuli() {
         wait();
+
+        c_in = 1;
+        for (int i = 0; i < 4; ++i) {
+            a[i] = 0;
+            b[i] = 0;
+        }
+
+        wait(11, SC_NS);
+
         c_in = 0;
+        for (int i = 0; i < 4; ++i) {
+            a[i] = 1;
+            b[i] = 1;
+        }
 
-        a[0] = 0;
-        a[1] = 0;
-        a[2] = 0;
-        a[3] = 1;
-
-        b[0] = 0;
-        b[1] = 0;
-        b[2] = 0;
-        b[3] = 0;
         wait(11, SC_NS);
 
         sc_stop();
