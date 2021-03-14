@@ -29,6 +29,7 @@ SC_MODULE (full_adder) {
         ha_2.carry(s3);
 
         SC_METHOD(func_or);
+        dont_initialize();
         sensitive << s2 << s3;
     }
 
