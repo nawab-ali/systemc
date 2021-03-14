@@ -15,6 +15,7 @@ SC_MODULE (half_adder) {
 
     SC_CTOR (half_adder) {
         SC_METHOD(add);
+        dont_initialize();
         sensitive << a << b;
     }
 
