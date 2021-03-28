@@ -31,8 +31,8 @@ SC_MODULE (four_bit_adder_tb) {
         wait(11, SC_NS);
 
         c_in = 0;
-        a = 10;
-        b = 10;
+        a = 15;
+        b = 15;
 
         wait(11, SC_NS);
 
