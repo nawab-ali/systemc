@@ -13,7 +13,7 @@
 SC_MODULE (four_bit_adder_tb) {
     sc_in<bool> clk;
     sc_out<bool> c_in;
-    sc_out<bool> a[4], b[4];
+    sc_out<sc_uint<4>> a, b;
 
     SC_CTOR (four_bit_adder_tb) {
         SC_THREAD(gen_stimuli);
@@ -25,18 +25,14 @@ SC_MODULE (four_bit_adder_tb) {
         wait();
 
         c_in = 1;
-        for (int i = 0; i < 4; ++i) {
-            a[i] = 0;
-            b[i] = 0;
-        }
+        a = 0;
+        b = 0;
 
         wait(11, SC_NS);
 
         c_in = 0;
-        for (int i = 0; i < 4; ++i) {
-            a[i] = 1;
-            b[i] = 1;
-        }
+        a = 10;
+        b = 10;
 
         wait(11, SC_NS);
 
