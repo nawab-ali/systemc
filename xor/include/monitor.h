@@ -21,6 +21,7 @@ SC_MODULE (monitor) {
 
 	SC_CTOR (monitor) {
 		SC_THREAD(monitor_dut);
+		dont_initialize();
 		sensitive << clk.pos();
 	}
 

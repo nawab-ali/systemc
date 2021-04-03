@@ -16,6 +16,7 @@ SC_MODULE (stimulus) {
 
 	SC_CTOR (stimulus) {
 		SC_THREAD(generate_stimuli);
+		dont_initialize();
 		sensitive << clk.pos();
 	}
 

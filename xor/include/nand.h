@@ -16,6 +16,7 @@ SC_MODULE (nand) {
 
 	SC_CTOR (nand) {
 		SC_METHOD(compute_nand);
+		dont_initialize();
 		sensitive << input_1 << input_2;
 	}
 

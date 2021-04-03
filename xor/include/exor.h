@@ -18,7 +18,7 @@ SC_MODULE (exor) {
 	nand n1, n2, n3, n4;
 	sc_signal<bool> s1, s2, s3;
 
-	SC_CTOR (exor): n1("NAND1"), n2("NAND2"), n3("NAND3"), n4("NAND4") {
+	SC_CTOR (exor): n1("nand1"), n2("nand2"), n3("nand3"), n4("nand4") {
 		n1.input_1(input_1);
 		n1.input_2(input_2);
 		n1.output(s1);
