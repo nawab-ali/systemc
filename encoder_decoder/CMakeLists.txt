@@ -12,5 +12,7 @@ link_directories(${CMAKE_PREFIX_PATH}/lib)
 # Executables
 include_directories(include)
 add_executable(two_four_decoder src/two_four_decoder_sim.cpp)
+add_executable(three_eight_decoder src/three_eight_decoder_sim.cpp)
 target_link_libraries(two_four_decoder systemc)
+target_link_libraries(three_eight_decoder systemc)
 
