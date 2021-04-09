@@ -28,7 +28,7 @@ SC_MODULE (three_eight_decoder) {
         SC_METHOD(process_output);
         dont_initialize();
         sensitive << o1 << o2;
-        
+
         decoder_2x4_1.enable(e1);
         decoder_2x4_1.input(i);
         decoder_2x4_1.output(o1);
@@ -43,14 +43,14 @@ SC_MODULE (three_eight_decoder) {
 
         e1.write(temp[2]);
         e2.write(~temp[2]);
-        i.write(temp.range(0, 1));
+        i.write(temp.range(1, 0));
     }
 
     void process_output() {
         sc_uint<8> temp;
 
-        temp.range(0, 3) = o1;
-        temp.range(4, 7) = o2;
+        temp.range(3, 0) = o1;
+        temp.range(7, 4) = o2;
         output.write(temp);
     }
 };
