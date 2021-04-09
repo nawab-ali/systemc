@@ -28,18 +28,14 @@ SC_MODULE (three_eight_decoder) {
         SC_METHOD(process_output);
         dont_initialize();
         sensitive << o1 << o2;
+        
+        decoder_2x4_1.enable(e1);
+        decoder_2x4_1.input(i);
+        decoder_2x4_1.output(o1);
 
-        if (enable.read()) {
-            decoder_2x4_1.enable(e1);
-            decoder_2x4_1.input(i);
-            decoder_2x4_1.output(o1);
-
-            decoder_2x4_2.enable(e2);
-            decoder_2x4_2.input(i);
-            decoder_2x4_2.output(o2);
-        } else {
-            output.write(0);
-        }
+        decoder_2x4_2.enable(e2);
+        decoder_2x4_2.input(i);
+        decoder_2x4_2.output(o2);
     }
 
     void process_input() {
