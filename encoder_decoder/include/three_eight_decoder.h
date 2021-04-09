@@ -51,7 +51,12 @@ SC_MODULE (three_eight_decoder) {
 
         temp.range(3, 0) = o1;
         temp.range(7, 4) = o2;
-        output.write(temp);
+
+        if (enable.read()) {
+            output.write(temp);
+        } else {
+            output.write(0);
+        }
     }
 };
 
