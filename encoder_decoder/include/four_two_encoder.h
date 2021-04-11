@@ -1,20 +1,20 @@
 /**
- * @file two_four_encoder.h
- * @brief This file implements a 2x4 Encoder.
+ * @file four_two_encoder.h
+ * @brief This file implements a 4x2 Encoder.
  * @author Nawab Ali
  */
 
-#ifndef TWO_FOUR_ENCODER_H
-#define TWO_FOUR_ENCODER_H
+#ifndef FOUR_TWO_ENCODER_H
+#define FOUR_TWO_ENCODER_H
 
 #include <systemc.h>
 
-SC_MODULE (two_four_encoder) {
+SC_MODULE (four_two_encoder) {
     sc_in<bool> enable;
     sc_in<sc_uint<4>> input;
     sc_out<sc_uint<2>> output;
 
-    SC_CTOR (two_four_encoder) {
+    SC_CTOR (four_two_encoder) {
         SC_METHOD(encode);
         dont_initialize();
         sensitive << input << enable;
@@ -44,4 +44,4 @@ SC_MODULE (two_four_encoder) {
     }
 };
 
-#endif //TWO_FOUR_ENCODER_H
+#endif //FOUR_TWO_ENCODER_H

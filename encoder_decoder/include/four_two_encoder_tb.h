@@ -1,20 +1,20 @@
 /**
- * @file two_four_encoder_tb.h
- * @brief This file implements the testbench for the 2x4 Encoder.
+ * @file four_two_encoder_tb.h
+ * @brief This file implements the testbench for the 4x2 Encoder.
  * @author Nawab Ali
  */
 
-#ifndef TWO_FOUR_ENCODER_TB_H
-#define TWO_FOUR_ENCODER_TB_H
+#ifndef FOUR_TWO_ENCODER_TB_H
+#define FOUR_TWO_ENCODER_TB_H
 
 #include <systemc.h>
 
-SC_MODULE (two_four_encoder_tb) {
+SC_MODULE (four_two_encoder_tb) {
     sc_in<bool> clk;
     sc_out<bool> enable;
     sc_out<sc_uint<4>> input;
 
-    SC_CTOR (two_four_encoder_tb) {
+    SC_CTOR (four_two_encoder_tb) {
         SC_THREAD(gen_stimuli);
         dont_initialize();
         sensitive << clk.pos();
@@ -39,4 +39,4 @@ SC_MODULE (two_four_encoder_tb) {
     }
 };
 
-#endif //TWO_FOUR_ENCODER_TB_H
+#endif //FOUR_TWO_ENCODER_TB_H
