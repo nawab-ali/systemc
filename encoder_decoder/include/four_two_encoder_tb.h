@@ -35,6 +35,10 @@ SC_MODULE (four_two_encoder_tb) {
             wait();
         }
 
+        enable.write(1);
+        input.write(5);
+        wait();
+
         sc_stop();
     }
 };

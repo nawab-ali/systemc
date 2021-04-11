@@ -36,10 +36,10 @@ SC_MODULE (four_two_encoder) {
                     output.write(3);
                     break;
                 default:
-                    output.write(0);
+                    output.write(NAN);
             }
         } else {
-            output.write(0);
+            output.write(NAN);
         }
     }
 };
