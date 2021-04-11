@@ -1,4 +1,4 @@
-**SystemC Projects**
+**SystemC/TLM Projects**
 
 1. adder: half-adder, full-adder, 4-bit adder
 2. counter: 4-bit counter
