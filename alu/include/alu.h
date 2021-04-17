@@ -9,7 +9,6 @@
 
 #include <systemc.h>
 
-//enum class Ops{ADD, SUBTRACT, INCR, DECR, AND, OR, NAND, XOR};
 enum Ops{ADD, SUBTRACT, INCR, DECR, AND, OR, NAND, XOR};
 
 SC_MODULE (alu) {
