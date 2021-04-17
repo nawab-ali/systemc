@@ -10,6 +10,9 @@
 #include <systemc.h>
 
 SC_MODULE (alu_tb) {
+    sc_in<bool> clk;
+    sc_out<sc_uint<3>> opcode;
+    sc_out<sc_uint<4>> operand1, operand2;
 
     SC_CTOR (alu_tb) {
         SC_THREAD(gen_stimuli);
@@ -20,17 +23,12 @@ SC_MODULE (alu_tb) {
     void gen_stimuli() {
         wait();
 
-        reset = 1;
-        wait();
-
-        reset = 0;
-        enable = 1;
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < 8; ++i) {
+            opcode.write(i);
+            operand1.write(3);
+            operand2.write(3);
             wait();
         }
-
-        reset = 1;
-        wait();
 
         sc_stop();
     }
