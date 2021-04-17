@@ -25,7 +25,7 @@ SC_MODULE (alu_tb) {
 
         for (int i = 0; i < 8; ++i) {
             opcode.write(i);
-            operand1.write(3);
+            operand1.write(15);
             operand2.write(3);
             wait();
         }

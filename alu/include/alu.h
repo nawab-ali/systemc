@@ -50,7 +50,7 @@ SC_MODULE (alu) {
                 r = data1 | data2;
                 break;
             case Ops::NAND:
-                r = ~(data1 & data2);
+                r.range(3, 0) = ~(data1 & data2);
                 break;
             case Ops::XOR:
                 r = data1 ^ data2;
