@@ -1,3 +1,3 @@
-**4-bit Counter**
+**4-bit ALU**
 
-![image](https://user-images.githubusercontent.com/42716711/110701634-48bf8f80-81a6-11eb-9b10-d15b57008eb2.png)
+![image](https://user-images.githubusercontent.com/42716711/115118846-274a8400-9f5a-11eb-9910-6613cca045a1.png)
