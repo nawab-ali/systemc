@@ -16,15 +16,16 @@ using namespace std;
 
 SC_MODULE (Cpu) {
     int data;
+    tlm::tlm_generic_payload* trans;
     // TLM-2 socket, defaults to 32-bits wide, base protocol
     tlm_utils::simple_initiator_socket<Cpu> socket;
 
     SC_CTOR (Cpu) : socket("socket") {
+        trans = new tlm::tlm_generic_payload;
         SC_THREAD(generate_payload);
     }
 
     void generate_payload() {
-        tlm::tlm_generic_payload* trans = new tlm::tlm_generic_payload;
         sc_time delay = sc_time(10, SC_NS);
 
         // Generate a random sequence of reads and writes
@@ -50,12 +51,15 @@ SC_MODULE (Cpu) {
                 SC_REPORT_ERROR("TLM-2", "Response error from b_transport");
             }
 
-            cout << "trans = { " << (cmd ? 'W' : 'R') << ", " << hex << i
-                 << " } , data = " << hex << data << " at time " << sc_time_stamp()
-                 << " delay = " << delay << endl;
+            cout << "trans = {" << (cmd ? 'W' : 'R') << ", " << hex << i << "} data = " << hex << data << " at time "
+                 << sc_time_stamp() << " delay = " << delay << endl;
 
             wait(delay);
         }
+    }
+
+    ~Cpu() {
+        delete trans;
     }
 };
 

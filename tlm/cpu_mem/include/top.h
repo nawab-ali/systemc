@@ -21,6 +21,11 @@ SC_MODULE (Top) {
 
         cpu->socket.bind(memory->socket);
     }
+
+    ~Top() {
+        delete cpu;
+        delete memory;
+    }
 };
 
 #endif //TOP_H
