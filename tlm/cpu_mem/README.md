@@ -1,1 +1,1 @@
-Simple TLM transactions between CPU and memory.
+Blocking TLM transactions between CPU and memory.
