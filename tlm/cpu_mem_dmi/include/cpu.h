@@ -48,7 +48,10 @@ SC_MODULE (Cpu) {
             socket->b_transport(*trans, delay);
 
             if (trans->is_response_error()) {
-                SC_REPORT_ERROR("TLM-2", "Response error from b_transport");
+                char txt[100];
+                snprintf(txt, 100, "Error from b_transport, response status = %s",
+                         trans->get_response_string().c_str());
+                SC_REPORT_ERROR("TLM-2", txt);
             }
 
             cout << "trans = {" << (cmd ? 'W' : 'R') << ", " << hex << i << "} data = " << hex << data << " at time "

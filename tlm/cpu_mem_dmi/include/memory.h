@@ -30,6 +30,7 @@ SC_MODULE (Memory) {
 
     // TLM-2 blocking transport method
     virtual void b_transport(tlm::tlm_generic_payload& trans, sc_time& delay) {
+        tlm::tlm_response_status resp_status;
         tlm::tlm_command cmd = trans.get_command();
         sc_dt::uint64 addr = trans.get_address() / 4;
         unsigned char* ptr = trans.get_data_ptr();
@@ -37,8 +38,11 @@ SC_MODULE (Memory) {
         unsigned char* byte = trans.get_byte_enable_ptr();
         unsigned int width = trans.get_streaming_width();
 
-        if (addr >= sc_dt::uint64(SIZE) || byte != 0 || len > 4 || width < len) {
-            SC_REPORT_ERROR("TLM-2", "Memory does not support given generic payload transaction");
+        // Check transaction for errors
+        resp_status = check_trans_error(addr, byte, len, width);
+        trans.set_response_status(resp_status);
+        if (resp_status != tlm::TLM_INCOMPLETE_RESPONSE) {
+            return;
         }
 
         if (cmd == tlm::TLM_READ_COMMAND) {
@@ -50,6 +54,19 @@ SC_MODULE (Memory) {
         }
 
         trans.set_response_status(tlm::TLM_OK_RESPONSE);
+    }
+
+    tlm::tlm_response_status check_trans_error(sc_dt::uint64& addr, unsigned char* byte, unsigned int& len,
+                                               unsigned int& width) {
+        if (addr >= sc_dt::uint64(SIZE)) {
+            return tlm::TLM_ADDRESS_ERROR_RESPONSE;
+        } else if (byte != 0) {
+            return tlm::TLM_BYTE_ENABLE_ERROR_RESPONSE;
+        } else if (len > 4 || width < len) {
+            return tlm::TLM_BURST_ERROR_RESPONSE;
+        } else {
+            return tlm::TLM_INCOMPLETE_RESPONSE;
+        }
     }
 };
 
