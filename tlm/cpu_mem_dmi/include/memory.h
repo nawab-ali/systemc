@@ -37,7 +37,7 @@ SC_MODULE (Memory) {
     virtual void b_transport(tlm::tlm_generic_payload& trans, sc_time& delay) {
         tlm::tlm_response_status resp_status;
         tlm::tlm_command cmd = trans.get_command();
-        sc_dt::uint64 addr = trans.get_address() / 4;
+        sc_dt::uint64 addr = trans.get_address() / sizeof(int);
         unsigned char* ptr = trans.get_data_ptr();
         unsigned int len = trans.get_data_length();
         unsigned char* byte = trans.get_byte_enable_ptr();
@@ -71,7 +71,7 @@ SC_MODULE (Memory) {
         dmi_data.allow_read_write();
         dmi_data.set_dmi_ptr(reinterpret_cast<unsigned char*>(&mem[0]));
         dmi_data.set_start_address(0);
-        dmi_data.set_end_address(SIZE*4 - 1);
+        dmi_data.set_end_address(SIZE*sizeof(int) - 1);
         dmi_data.set_read_latency(latency);
         dmi_data.set_write_latency(latency);
 
