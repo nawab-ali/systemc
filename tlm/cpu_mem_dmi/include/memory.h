@@ -15,17 +15,22 @@ enum {SIZE = 256};
 
 SC_MODULE (Memory) {
     int mem[SIZE];
+    const sc_time latency;
+
     // TLM-2 socket, defaults to 32-bits wide, base protocol
     tlm_utils::simple_target_socket<Memory> socket;
     
-    SC_CTOR (Memory) : socket("socket") {
-        // Register callback for incoming b_transport interface method call
+    SC_CTOR (Memory) : socket("socket"), latency(10, SC_NS) {
+        // Register callbacks for incoming interface method calls
         socket.register_b_transport(this, &Memory::b_transport);
+        socket.register_get_direct_mem_ptr(this, &Memory::get_direct_mem_ptr);
 
         // Initialize memory with random data
         for (int i = 0; i < SIZE; ++i) {
             mem[i] = 0xAA000000 | (rand() % SIZE);
         }
+
+        SC_THREAD(invalidate_dmi_ptr);
     }
 
     // TLM-2 blocking transport method
@@ -53,7 +58,32 @@ SC_MODULE (Memory) {
             SC_REPORT_ERROR("TLM-2", "Memory does not support given command");
         }
 
+        // b_transport may block
+        wait(delay);
+        delay = SC_ZERO_TIME;
+
+        trans.set_dmi_allowed(true);
         trans.set_response_status(tlm::TLM_OK_RESPONSE);
+    }
+
+    // TLM-2 forward DMI method
+    virtual bool get_direct_mem_ptr(tlm::tlm_generic_payload& trans, tlm::tlm_dmi& dmi_data) {
+        dmi_data.allow_read_write();
+        dmi_data.set_dmi_ptr(reinterpret_cast<unsigned char*>(&mem[0]));
+        dmi_data.set_start_address(0);
+        dmi_data.set_end_address(SIZE*4 - 1);
+        dmi_data.set_read_latency(latency);
+        dmi_data.set_write_latency(latency);
+
+        return true;
+    }
+
+    // Invalidate DMI pointers periodically
+    void invalidate_dmi_ptr() {
+        for (int i = 0; i < 4; ++i) {
+            wait(latency * 8);
+            socket->invalidate_direct_mem_ptr(0, SIZE-1);
+        }
     }
 
     tlm::tlm_response_status check_trans_error(sc_dt::uint64& addr, unsigned char* byte, unsigned int& len,
