@@ -35,7 +35,7 @@ SC_MODULE (Cpu) {
         sc_time delay = sc_time(10, SC_NS);
 
         // Generate a random sequence of reads and writes
-        for (int i = 0; i < 128; i += 4) {
+        for (int i = 256-64; i < 256+64; i += 4) {
             tlm::tlm_command cmd = static_cast<tlm::tlm_command>(rand() % 2);
 
             if (cmd == tlm::TLM_WRITE_COMMAND) {
