@@ -1,1 +1,3 @@
-Blocking TLM transactions between CPU and memory using Direct Memory Interface.
+Propagate TLM transactions through an interconnect component representing a router placed between the CPU and several target memories. The router has to forward transport and DMI to the target, and it also has to manage the return path as the function calls unwind and transactions are returned to the initiator. We have to deal with two issues: how to model an interconnect component that has a single target socket but multiple initiator sockets, and how to handle the addresses in the transactions as they pass forward and backward through the router.
+
+![image](https://user-images.githubusercontent.com/42716711/118403084-a26a8d00-b621-11eb-8460-b71b26268925.png)
