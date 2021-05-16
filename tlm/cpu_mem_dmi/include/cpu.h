@@ -35,7 +35,7 @@ SC_MODULE (Cpu) {
         sc_time delay = sc_time(10, SC_NS);
 
         // Generate a random sequence of reads and writes
-        for (int i = 0; i < 128; i += 4) {
+        for (int i = 256-64; i < 256+64; i += 4) {
             tlm::tlm_command cmd = static_cast<tlm::tlm_command>(rand() % 2);
 
             if (cmd == tlm::TLM_WRITE_COMMAND) {
@@ -52,9 +52,9 @@ SC_MODULE (Cpu) {
     }
 
     // Use transport interface for communicating with target
-    void comm_transport_interface(tlm::tlm_command& cmd, int& i, sc_time& delay) {
+    void comm_transport_interface(tlm::tlm_command& cmd, int& address, sc_time& delay) {
         trans->set_command(cmd);
-        trans->set_address(i);
+        trans->set_address(address);
         trans->set_data_ptr(reinterpret_cast<unsigned char*>(&data));
         trans->set_data_length(sizeof(data));
         trans->set_streaming_width(4);
@@ -78,25 +78,25 @@ SC_MODULE (Cpu) {
             dmi_ptr_valid = socket->get_direct_mem_ptr(*trans, dmi_data);
         }
 
-        cout << "trans = {" << (cmd ? 'W' : 'R') << ", " << hex << i << "} data = " << hex << data
+        cout << "trans = {" << (cmd ? 'W' : 'R') << ", " << hex << address << "}, data = " << hex << data
              << " at time " << sc_time_stamp() << " delay = " << delay << endl;
     }
 
     // Use direct memory interface for communicating with target
-    void comm_dmi(tlm::tlm_command& cmd, int& i) {
+    void comm_dmi(tlm::tlm_command& cmd, int& address) {
         if (cmd == tlm::TLM_READ_COMMAND) {
             assert(dmi_data.is_read_allowed());
-            memcpy(&data, dmi_data.get_dmi_ptr() + i, sizeof(data));
+            memcpy(&data, dmi_data.get_dmi_ptr() + address, sizeof(data));
             wait(dmi_data.get_read_latency());
         } else if (cmd == tlm::TLM_WRITE_COMMAND) {
             assert(dmi_data.is_write_allowed());
-            memcpy(dmi_data.get_dmi_ptr() + i, &data, sizeof(data));
+            memcpy(dmi_data.get_dmi_ptr() + address, &data, sizeof(data));
             wait(dmi_data.get_write_latency());
         } else {
             SC_REPORT_ERROR("TLM-2", "Memory does not support given command");
         }
 
-        cout << "dmi   = {" << (cmd ? 'W' : 'R') << ", " << hex << i << "} , data = " << hex << data
+        cout << "dmi   = {" << (cmd ? 'W' : 'R') << ", " << hex << address << "}, data = " << hex << data
              << " at time " << sc_time_stamp() << endl;
     }
 

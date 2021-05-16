@@ -12,8 +12,8 @@
 #include <systemc.h>
 
 SC_MODULE (Top) {
-    Cpu *cpu;
-    Memory *memory;
+    Cpu* cpu;
+    Memory* memory;
 
     SC_CTOR (Top) {
         cpu = new Cpu("cpu");
