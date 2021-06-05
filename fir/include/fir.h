@@ -32,7 +32,12 @@ SC_MODULE (fir) {
         double sum = 0.0;
         delay[0] = sample.read();
 
-        if (!reset.read()) {
+        if (reset.read()) {
+            sum = 0.0;
+            for (int i = 0; i <= order; ++i) {
+                delay[i] = 0.0;
+            }
+        } else {
             // Create a weighted sum of delay and coeff
             for (int i = 0; i <= order; ++i) {
                 sum += delay[i] * coeff[i];

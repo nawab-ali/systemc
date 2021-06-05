@@ -37,6 +37,10 @@ SC_MODULE (fir_tb) {
         sample.write(1.0);
 
         wait();
+        reset.write(false);
+        sample.write(0.0);
+
+        wait();
         for (int i = 0; i < num_samples; ++i) {
             reset.write(false);
             sample.write(samples[i]);
