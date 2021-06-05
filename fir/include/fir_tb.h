@@ -25,12 +25,23 @@ SC_MODULE (fir_tb) {
     }
 
     void gen_stimuli() {
-        wait();
-        reset.write(false);
-        sample.write(1.0);
-        cout << sc_time_stamp << result.read() << endl;
+        const int num_samples = 16;
+        double samples[num_samples] = {1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
+        double results[num_samples] = {0.0, -0.07556556070608, 0.09129209297815, 0.47697917208036, 0.47697917208036,
+                                       0.09129209297815, -0.07556556070608, 0.0, 0.0, -0.07556556070608,
+                                       0.01572653227208, 0.49270570435244, 0.96968487643279, 1.06097696941095,
+                                       0.98541140870487, 0.98541140870487};
 
         wait();
+        reset.write(true);
+        sample.write(1.0);
+
+        wait();
+        for (int i = 0; i < num_samples; ++i) {
+            reset.write(false);
+            sample.write(samples[i]);
+            wait();
+        }
 
         sc_stop();
     }

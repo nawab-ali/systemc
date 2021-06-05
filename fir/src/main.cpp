@@ -45,7 +45,7 @@ void simulate_fir() {
     fir_tb0.result(result);
 
     fp = create_vcd_trace("fir", clk, reset, sample, result);
-    sc_start(200, SC_NS);
+    sc_start(300, SC_NS);
     sc_close_vcd_trace_file(fp);
 }
 
