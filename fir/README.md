@@ -1,3 +1,4 @@
-**4-bit Counter**
+**N-order Finite Impulse Response (FIR) filter**
 
-![image](https://user-images.githubusercontent.com/42716711/110701634-48bf8f80-81a6-11eb-9b10-d15b57008eb2.png)
+![image](https://user-images.githubusercontent.com/42716711/121242055-f64b4900-c850-11eb-8f30-3165e5afd2b9.png)
+
