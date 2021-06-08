@@ -12,6 +12,11 @@
 
 using namespace std;
 
+// Compare 2 double values
+bool cmpd(double actual, double expected, double epsilon = 0.005f) {
+    return (fabs(actual - expected) < epsilon);
+}
+
 SC_MODULE (fir_tb) {
     sc_in<bool> clk;
     sc_in<double> result;
@@ -45,6 +50,7 @@ SC_MODULE (fir_tb) {
             reset.write(false);
             sample.write(samples[i]);
             wait();
+            sc_assert(cmpd(result.read(), results[i], 2E-14));
         }
 
         sc_stop();

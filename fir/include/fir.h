@@ -7,7 +7,10 @@
 #ifndef FIR_H
 #define FIR_H
 
+#include <iostream>
 #include <systemc.h>
+
+using namespace std;
 
 template<unsigned int order, const double* coeff>
 SC_MODULE (fir) {
@@ -20,6 +23,10 @@ SC_MODULE (fir) {
 
     SC_CTOR (fir) {
         SC_METHOD(process_signal);
+        dont_initialize();
+        sensitive << clk.pos();
+
+        SC_METHOD(monitor);
         dont_initialize();
         sensitive << clk.pos();
 
@@ -44,12 +51,17 @@ SC_MODULE (fir) {
             }
 
             // Shift the delays to the right
-            for (int i = 0; i < order; ++i) {
+            for (int i = order-1; i >= 0; --i) {
                 delay[i+1] = delay[i];
             }
         }
 
         result.write(sum);
+    }
+
+    void monitor() {
+        cout << "Timestamp:  " << sc_time_stamp() << "\tsample: " << sample.read() << "\tresult: " << result.read()
+        << endl;
     }
 };
 
