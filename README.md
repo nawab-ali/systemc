@@ -8,5 +8,5 @@
 6. shift_reg: 4-bit shift register
 7. tlm/cpu_mem: Blocking TLM transactions between CPU and memory
 8. tlm/cpu_mem_dmi: Blocking TLM transactions between CPU and memory using Direct Memory Interface
-9. tlm/cpu_router_mem: TLM transactions between CPU and multiple memories via an interconnect.
+9. tlm/cpu_router_mem: TLM transactions between CPU and multiple memories via an interconnect
 10. xor: XOR gate using NAND gates
