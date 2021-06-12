@@ -1,4 +1,4 @@
-**SystemC/TLM Projects**
+# SystemC/TLM Projects
 
 1. adder: half-adder, full-adder, 4-bit adder
 2. alu: 4-bit ALU
@@ -10,3 +10,15 @@
 8. tlm/cpu_mem_dmi: Blocking TLM transactions between CPU and memory using Direct Memory Interface
 9. tlm/cpu_router_mem: TLM transactions between CPU and multiple memories via an interconnect
 10. xor: XOR gate using NAND gates
+
+## Build Instructions
+
+Switch to each project directory to build the executable, e.g.
+
+```
+bash$ cd fir
+bash$ mkdir build
+bash$ cd build
+bash$ cmake ..
+bash$ make
+```
