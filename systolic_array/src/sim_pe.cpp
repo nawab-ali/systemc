@@ -8,9 +8,9 @@
 #include "pe_tb.h"
 #include <systemc.h>
 
-sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_in<int8_t>& activation_in,
-                                sc_in<int32_t>& partial_sum_in, sc_out<int8_t>& activation_out,
-                                sc_out<int32_t>& partial_sum_out) {
+sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<int8_t>& activation_in,
+                                sc_signal<int32_t>& partial_sum_in, sc_signal<int8_t>& activation_out,
+                                sc_signal<int32_t>& partial_sum_out) {
     sc_trace_file* fp = sc_create_vcd_trace_file(file);
 
     sc_trace(fp, clk, "clk");
@@ -26,19 +26,24 @@ void simulate_pe() {
     sc_trace_file* fp;
     sc_clock clk("clk", 10, SC_NS, 0.5, 1, SC_NS);
 
-    sc_signal<int8_t> activation;
-    sc_signal<int32_t> partial_sum;
+    sc_signal<int8_t> activation_in;
+    sc_signal<int32_t> partial_sum_in;
+    sc_signal<int8_t> activation_out;
+    sc_signal<int32_t> partial_sum_out;
 
     pe pe0("PE0", 4);
-    pe0.activation_in(activation);
-    pe0.partial_sum_in(partial_sum);
+    pe0.clk(clk);
+    pe0.activation_in(activation_in);
+    pe0.partial_sum_in(partial_sum_in);
+    pe0.activation_out(activation_out);
+    pe0.partial_sum_out(partial_sum_out);
 
     pe_tb pe_tb0("PE_TB0");
-    pe_tb0.activation_out(activation);
-    pe_tb0.partial_sum_out(partial_sum);
+    pe_tb0.clk(clk);
+    pe_tb0.activation_out(activation_in);
+    pe_tb0.partial_sum_out(partial_sum_in);
 
-    fp = create_vcd_trace("pe", clk, pe0.activation_in, pe0.partial_sum_in, pe0.activation_out,
-                          pe0.partial_sum_out);
+    fp = create_vcd_trace("pe", clk, activation_in, partial_sum_in, activation_out, partial_sum_out);
     sc_start(200, SC_NS);
     sc_close_vcd_trace_file(fp);
 }
