@@ -22,10 +22,14 @@ public:
     }
 
     void gen_stimuli() {
+        const int num_samples = 10;
+        int8_t activations[num_samples] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        int32_t partial_sums[num_samples] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
         wait();
-        for (int i = 0; i < 10; ++i) {
-            activation_out.write(7);
-            partial_sum_out.write(8);
+        for (int i = 0; i < num_samples; ++i) {
+            activation_out.write(activations[i]);
+            partial_sum_out.write(partial_sums[i]);
             wait();
         }
         sc_stop();
