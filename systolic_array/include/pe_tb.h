@@ -12,8 +12,8 @@
 SC_MODULE (pe_tb) {
 public:
     sc_in<bool> clk;
-    sc_out<int8_t> activation_out;
-    sc_out<int32_t> partial_sum_out;
+    sc_out<sc_int<8>> activation_out;
+    sc_out<sc_int<32>> partial_sum_out;
 
     SC_CTOR (pe_tb) {
         SC_THREAD(gen_stimuli);
@@ -23,8 +23,8 @@ public:
 
     void gen_stimuli() {
         const int num_samples = 10;
-        int8_t activations[num_samples] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-        int32_t partial_sums[num_samples] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        sc_int<8> activations[num_samples] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        sc_int<32> partial_sums[num_samples] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
         wait();
         for (int i = 0; i < num_samples; ++i) {

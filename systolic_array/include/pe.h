@@ -12,14 +12,14 @@
 SC_MODULE (pe) {
 public:
     sc_in<bool> clk;
-    sc_in<int8_t> activation_in;
-    sc_in<int32_t> partial_sum_in;
-    sc_out<int8_t> activation_out;
-    sc_out<int32_t> partial_sum_out;
+    sc_in<sc_int<8>> activation_in;
+    sc_in<sc_int<32>> partial_sum_in;
+    sc_out<sc_int<8>> activation_out;
+    sc_out<sc_int<32>> partial_sum_out;
 
-    int8_t weight;
+    sc_int<8> weight;
 
-    pe(sc_module_name nm, int8_t w = 0) : sc_module(nm), weight(w) {
+    pe(sc_module_name nm, sc_int<8> w = 0) : sc_module(nm), weight(w) {
         SC_HAS_PROCESS(pe);
         SC_METHOD(mac);
         dont_initialize();
@@ -28,8 +28,8 @@ public:
 
     // Multiply-and-Accumulate
     void mac() {
-        int8_t activation = activation_in.read();
-        int32_t partial_sum = partial_sum_in.read();
+        sc_int<8> activation = activation_in.read();
+        sc_int<32> partial_sum = partial_sum_in.read();
 
         partial_sum += activation * weight;
 
