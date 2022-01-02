@@ -42,6 +42,8 @@ void simulate_pe() {
     pe_tb0.clk(clk);
     pe_tb0.activation_out(activation_in);
     pe_tb0.partial_sum_out(partial_sum_in);
+    pe_tb0.activation_in(activation_out);
+    pe_tb0.partial_sum_in(partial_sum_out);
 
     fp = create_vcd_trace("pe", clk, activation_in, partial_sum_in, activation_out, partial_sum_out);
     sc_start(200, SC_NS);
