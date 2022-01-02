@@ -51,6 +51,7 @@ void simulate_pe() {
 }
 
 int sc_main(int argc, char** argv) {
+    srand(time(nullptr));
     simulate_pe();
     return 0;
 }

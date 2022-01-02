@@ -9,6 +9,10 @@
 
 #include <systemc.h>
 
+int random(int min, int max){
+    return min + rand() / (RAND_MAX / (max - min + 1) + 1);
+}
+
 SC_MODULE (pe_tb) {
 public:
     sc_in<bool> clk;
@@ -26,10 +30,18 @@ public:
     void gen_stimuli() {
         const int num_samples = 10;
         const sc_int<8> weight = 4;
+        sc_int<8> activations[num_samples];
         sc_int<8> activations_out_observed[num_samples];
-        sc_int<32> partial_sums_observed[num_samples], partial_sums_expected[num_samples];
-        sc_int<8> activations[num_samples] = {0, 1, -127, 127, 4, 5, 6, 7, 8, 9};
-        sc_int<32> partial_sums[num_samples] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        sc_int<32> partial_sums[num_samples];
+        sc_int<32> partial_sums_observed[num_samples];
+        sc_int<32> partial_sums_expected[num_samples];
+
+        // Initialize activations and partial_sums to random numbers
+        for (int i = 0; i < num_samples; ++i) {
+            activations[i] = random(-127, 127);
+            partial_sums[i] = random(0, 1000);
+            partial_sums_expected[i] = partial_sums[i] + activations[i] * weight;
+        }
 
         wait();
         for (int i = 0; i < num_samples; ++i) {
@@ -38,11 +50,6 @@ public:
             wait();
             partial_sums_observed[i] = partial_sum_in.read();
             activations_out_observed[i] = activation_in.read();
-        }
-
-        // Calculate expected partial sums
-        for (int i = 0; i < num_samples; ++i) {
-            partial_sums_expected[i] = partial_sums[i] + activations[i] * weight;
         }
 
         // Validate PE results
