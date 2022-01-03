@@ -1,6 +1,6 @@
 /**
  * @file pe_tb.h
- * @brief This file implements the testbench for the PE.
+ * @brief This file implements the test bench for the PE.
  * @author Nawab Ali
  */
 

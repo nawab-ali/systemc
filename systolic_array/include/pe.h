@@ -32,7 +32,6 @@ public:
         sc_int<32> partial_sum = partial_sum_in.read();
 
         partial_sum += activation * weight;
-
         activation_out.write(activation);
         partial_sum_out.write(partial_sum);
     }
