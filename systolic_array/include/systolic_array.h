@@ -14,6 +14,7 @@ template<uint8_t N>
 SC_MODULE (systolic_array) {
 public:
     sc_in<bool> clk;
+    pe pe_array[N][N];
     sc_uint<8> weights[N][N];
 
     SC_CTOR (systolic_array) {

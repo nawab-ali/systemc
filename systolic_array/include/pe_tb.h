@@ -7,14 +7,11 @@
 #ifndef PE_TB_H
 #define PE_TB_H
 
+#include "util.h"
 #include <systemc.h>
 
 const sc_int<8> weight = 4;
 const int num_samples = 100;
-
-int random(int min, int max){
-    return min + rand() / (RAND_MAX / (max - min + 1) + 1);
-}
 
 SC_MODULE (pe_tb) {
 public:

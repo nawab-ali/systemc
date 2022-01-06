@@ -6,6 +6,8 @@
 
 #include "pe.h"
 #include "pe_tb.h"
+#include <ctime>
+#include <cstdlib>
 #include <systemc.h>
 
 sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<sc_int<8>>& activation_in,
