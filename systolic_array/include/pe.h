@@ -17,8 +17,6 @@ public:
     sc_out<sc_int<8>> activation_out;
     sc_out<sc_int<32>> partial_sum_out;
 
-    sc_int<8> weight;
-
     pe(sc_module_name nm, sc_int<8> w = 0) : sc_module(nm), weight(w) {
         SC_HAS_PROCESS(pe);
         SC_METHOD(mac);
@@ -35,6 +33,9 @@ public:
         activation_out.write(activation);
         partial_sum_out.write(partial_sum);
     }
+
+private:
+    sc_int<8> weight;
 };
 
 #endif //PE_H
