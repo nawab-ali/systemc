@@ -27,6 +27,13 @@ public:
         sensitive << clk.pos();
     }
 
+private:
+    sc_int<8> activations[num_samples];
+    sc_int<8> activations_out_observed[num_samples];
+    sc_int<32> partial_sums[num_samples];
+    sc_int<32> partial_sums_observed[num_samples];
+    sc_int<32> partial_sums_expected[num_samples];
+
     // Generate stimuli for PE
     void gen_stimuli() {
         init_data();
@@ -43,14 +50,7 @@ public:
         validate_results();
         sc_stop();
     }
-
-private:
-    sc_int<8> activations[num_samples];
-    sc_int<8> activations_out_observed[num_samples];
-    sc_int<32> partial_sums[num_samples];
-    sc_int<32> partial_sums_observed[num_samples];
-    sc_int<32> partial_sums_expected[num_samples];
-
+    
     // Initialize activations and partial_sums to random numbers
     void init_data() {
         for (int i = 0; i < num_samples; ++i) {

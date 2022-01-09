@@ -24,6 +24,9 @@ public:
         sensitive << clk.pos();
     }
 
+private:
+    sc_int<8> weight;
+
     // Multiply-and-Accumulate
     void mac() {
         sc_int<8> activation = activation_in.read();
@@ -33,9 +36,6 @@ public:
         activation_out.write(activation);
         partial_sum_out.write(partial_sum);
     }
-
-private:
-    sc_int<8> weight;
 };
 
 #endif //PE_H
