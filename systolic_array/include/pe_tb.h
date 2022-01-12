@@ -50,7 +50,7 @@ private:
         validate_results();
         sc_stop();
     }
-    
+
     // Initialize activations and partial_sums to random numbers
     void init_data() {
         for (int i = 0; i < num_samples; ++i) {
