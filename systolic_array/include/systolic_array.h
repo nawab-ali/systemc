@@ -56,6 +56,7 @@ private:
                 } else if (i == 0 && j == N-1) {
                     pe_array[i][j].activation_in(activation_s[i][j-1]);
                     pe_array[i][j].partial_sum_in(partial_sum_in[j]);
+                    pe_array[i][j].activation_out(0);
                     pe_array[i][j].partial_sum_out(partial_sum_s[i][j]);
                 } else if (i == N-1 && j == 0) {
                     pe_array[i][j].activation_in(activation_in[i]);
@@ -65,6 +66,7 @@ private:
                 } else if (i == N-1 && j == N-1) {
                     pe_array[i][j].activation_in(activation_s[i][j-1]);
                     pe_array[i][j].partial_sum_in(partial_sum_s[i-1][j]);
+                    pe_array[i][j].activation_out(0);
                     pe_array[i][j].partial_sum_out(partial_sum_out[j]);
                 } else if (i == 0) {
                     pe_array[i][j].activation_in(activation_s[i][j-1]);
@@ -84,6 +86,7 @@ private:
                 } else if (j == N-1) {
                     pe_array[i][j].activation_in(activation_s[i][j-1]);
                     pe_array[i][j].partial_sum_in(partial_sum_s[i-1][j]);
+                    pe_array[i][j].activation_out(0);
                     pe_array[i][j].partial_sum_out(partial_sum_s[i][j]);
                 } else {
                     pe_array[i][j].activation_in(activation_s[i][j-1]);
