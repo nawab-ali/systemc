@@ -24,7 +24,10 @@ public:
         dont_initialize();
         sensitive << clk.pos();
 
+        // Initialize systolic array state
         init_weights();
+        init_act_signals();
+        init_psum_signals();
         create_pe_array();
     }
 
@@ -33,10 +36,8 @@ private:
     sc_int<8> weights[N][N];
 
     // Define signals for PE->PE data transfer
-    sc_signal<sc_int<8>> activation_in_s[N][N-1];
-    sc_signal<sc_int<32>> partial_sum_in_s[N-1][N];
-    sc_signal<sc_int<8>> activation_out_s[N][N-1];
-    sc_signal<sc_int<32>> partial_sum_out_s[N-1][N];
+    sc_signal<sc_int<8>> activation_s[N][N-1];
+    sc_signal<sc_int<32>> partial_sum_s[N-1][N];
 
     // Multiply activations with stationary weights every cycle. Activations move left->right. Partial sums move
     // top->bottom.
@@ -50,45 +51,45 @@ private:
                 if (i == 0 && j == 0) {
                     pe_array[i][j].activation_in(activation_in[i]);
                     pe_array[i][j].partial_sum_in(partial_sum_in[j]);
-                    pe_array[i][j].activation_out(activation_out_s[i][j]);
-                    pe_array[i][j].partial_sum_out(partial_sum_out_s[i][j]);
+                    pe_array[i][j].activation_out(activation_s[i][j]);
+                    pe_array[i][j].partial_sum_out(partial_sum_s[i][j]);
                 } else if (i == 0 && j == N-1) {
-                    pe_array[i][j].activation_in(activation_in_s[i][j-1]);
+                    pe_array[i][j].activation_in(activation_s[i][j-1]);
                     pe_array[i][j].partial_sum_in(partial_sum_in[j]);
-                    pe_array[i][j].partial_sum_out(partial_sum_out_s[i][j]);
+                    pe_array[i][j].partial_sum_out(partial_sum_s[i][j]);
                 } else if (i == N-1 && j == 0) {
                     pe_array[i][j].activation_in(activation_in[i]);
-                    pe_array[i][j].partial_sum_in(partial_sum_in_s[i-1][j]);
-                    pe_array[i][j].activation_out(activation_out_s[i][j]);
+                    pe_array[i][j].partial_sum_in(partial_sum_s[i-1][j]);
+                    pe_array[i][j].activation_out(activation_s[i][j]);
                     pe_array[i][j].partial_sum_out(partial_sum_out[j]);
                 } else if (i == N-1 && j == N-1) {
-                    pe_array[i][j].activation_in(activation_in_s[i][j-1]);
-                    pe_array[i][j].partial_sum_in(partial_sum_in_s[i-1][j]);
+                    pe_array[i][j].activation_in(activation_s[i][j-1]);
+                    pe_array[i][j].partial_sum_in(partial_sum_s[i-1][j]);
                     pe_array[i][j].partial_sum_out(partial_sum_out[j]);
                 } else if (i == 0) {
-                    pe_array[i][j].activation_in(activation_in_s[i][j-1]);
+                    pe_array[i][j].activation_in(activation_s[i][j-1]);
                     pe_array[i][j].partial_sum_in(partial_sum_in[j]);
-                    pe_array[i][j].activation_out(activation_out_s[i][j-1]);
-                    pe_array[i][j].partial_sum_out(partial_sum_out_s[i][j-1]);
+                    pe_array[i][j].activation_out(activation_s[i][j]);
+                    pe_array[i][j].partial_sum_out(partial_sum_s[i][j]);
                 } else if (j == 0) {
                     pe_array[i][j].activation_in(activation_in[i]);
-                    pe_array[i][j].partial_sum_in(partial_sum_in_s[i-1][j]);
-                    pe_array[i][j].activation_out(activation_out_s[i][j]);
-                    pe_array[i][j].partial_sum_out(partial_sum_out_s[i-1][j]);
+                    pe_array[i][j].partial_sum_in(partial_sum_s[i-1][j]);
+                    pe_array[i][j].activation_out(activation_s[i][j]);
+                    pe_array[i][j].partial_sum_out(partial_sum_s[i][j]);
                 } else if (i == N-1) {
-                    pe_array[i][j].activation_in(activation_in_s[i][j-1]);
-                    pe_array[i][j].partial_sum_in(partial_sum_in_s[i-1][j]);
-                    pe_array[i][j].activation_out(activation_out_s[i][j-1]);
+                    pe_array[i][j].activation_in(activation_s[i][j-1]);
+                    pe_array[i][j].partial_sum_in(partial_sum_s[i-1][j]);
+                    pe_array[i][j].activation_out(activation_s[i][j]);
                     pe_array[i][j].partial_sum_out(partial_sum_out[j]);
                 } else if (j == N-1) {
-                    pe_array[i][j].activation_in(activation_in_s[i][j-1]);
-                    pe_array[i][j].partial_sum_in(partial_sum_in_s[i-1][j]);
-                    pe_array[i][j].partial_sum_out(partial_sum_out_s[i-1][j]);
+                    pe_array[i][j].activation_in(activation_s[i][j-1]);
+                    pe_array[i][j].partial_sum_in(partial_sum_s[i-1][j]);
+                    pe_array[i][j].partial_sum_out(partial_sum_s[i][j]);
                 } else {
-                    pe_array[i][j].activation_in(activation_in_s[i][j-1]);
-                    pe_array[i][j].partial_sum_in(partial_sum_in_s[i-1][j]);
-                    pe_array[i][j].activation_out(activation_out_s[i][j-1]);
-                    pe_array[i][j].partial_sum_out(partial_sum_out_s[i-1][j]);
+                    pe_array[i][j].activation_in(activation_s[i][j-1]);
+                    pe_array[i][j].partial_sum_in(partial_sum_s[i-1][j]);
+                    pe_array[i][j].activation_out(activation_s[i][j]);
+                    pe_array[i][j].partial_sum_out(partial_sum_s[i][j]);
                 }
             }
         }
@@ -99,6 +100,26 @@ private:
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < N; ++j) {
                 weights[i][j] = random(-128, 127);
+            }
+        }
+    }
+
+    // Initialize the activation signals
+    void init_act_signals() {
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < N-1; ++j) {
+                sc_signal<sc_int<8>> s;
+                activation_s[i][j] = s;
+            }
+        }
+    }
+
+    // Initialize the partial_sum signals
+    void init_psum_signals() {
+        for (int i = 0; i < N-1; ++i) {
+            for (int j = 0; j < N; ++j) {
+                sc_signal<sc_int<32>> s;
+                partial_sum_s[i][j] = s;
             }
         }
     }
