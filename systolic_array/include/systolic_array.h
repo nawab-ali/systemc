@@ -9,7 +9,10 @@
 
 #include "pe.h"
 #include "util.h"
+#include <vector>
 #include <systemc.h>
+
+using namespace std;
 
 template<uint8_t N>
 SC_MODULE (systolic_array) {
@@ -19,26 +22,20 @@ public:
     sc_vector<sc_in<sc_int<32>>> partial_sum_in{"partial_sum_in", N};
     sc_vector<sc_out<sc_int<32>>> partial_sum_out{"partial_sum_out", N};
 
-    SC_CTOR (systolic_array) {
+    SC_CTOR (systolic_array) : pe_grid(N, vector<pe>(N, pe("PE", random(-128, 127)))),
+                               activation_out(N, sc_out<sc_int<8>>()),
+                               activation_s(N, vector<sc_signal<sc_int<8>>>(N-1, sc_signal<sc_int<8>>())),
+                               partial_sum_s(N-1, vector<sc_signal<sc_int<32>>>(N, sc_signal<sc_int<32>>())) {
         SC_METHOD(matmul);
         dont_initialize();
         sensitive << clk.pos();
-
-        // Initialize systolic array state
-        init_weights();
-        init_act_signals();
-        init_psum_signals();
-        create_pe_grid();
     }
 
 private:
-    pe pe_grid[N][N];
-    sc_int<8> weights[N][N];
-    sc_out<sc_int<8>> activation_out[N];
-
-    // Define signals for PE->PE data transfer
-    sc_signal<sc_int<8>> activation_s[N][N-1];
-    sc_signal<sc_int<32>> partial_sum_s[N-1][N];
+    vector<vector<pe>> pe_grid;
+    vector<sc_out<sc_int<8>>> activation_out;
+    vector<vector<sc_signal<sc_int<8>>>> activation_s;
+    vector<vector<sc_signal<sc_int<32>>>> partial_sum_s;
 
     // Multiply activations with stationary weights every cycle. Activations move left->right. Partial sums move
     // top->bottom.
@@ -98,47 +95,6 @@ private:
             }
         }
     }
-
-    // Initialize weights to random values
-    void init_weights() {
-        for (int i = 0; i < N; ++i) {
-            for (int j = 0; j < N; ++j) {
-                weights[i][j] = random(-128, 127);
-            }
-        }
-    }
-
-    // Initialize the activation signals
-    void init_act_signals() {
-        for (int i = 0; i < N; ++i) {
-            for (int j = 0; j < N-1; ++j) {
-                sc_signal<sc_int<8>> s;
-                activation_s[i][j] = s;
-            }
-        }
-    }
-
-    // Initialize the partial_sum signals
-    void init_psum_signals() {
-        for (int i = 0; i < N-1; ++i) {
-            for (int j = 0; j < N; ++j) {
-                sc_signal<sc_int<32>> s;
-                partial_sum_s[i][j] = s;
-            }
-        }
-    }
-
-    // Create the PE grid
-    void create_pe_grid() {
-        char name[16];
-        for (int i = 0; i < N; ++i) {
-            for (int j = 0; j < N; ++j) {
-                snprintf(name, 16, "PE_%d_%d", i, j);
-                pe_grid[i][j] = pe(name, weights[i][j]);
-            }
-        }
-    }
-
 };
 
 #endif //SYSTOLIC_ARRAY_H
