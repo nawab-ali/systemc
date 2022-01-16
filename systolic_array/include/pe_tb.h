@@ -13,8 +13,6 @@
 
 using namespace std;
 
-const sc_int<8> weight = 4;
-
 template<uint32_t N>
 SC_MODULE (pe_tb) {
 public:
@@ -24,11 +22,14 @@ public:
     sc_out<sc_int<8>> activation_out;
     sc_out<sc_int<32>> partial_sum_out;
 
-    SC_CTOR (pe_tb) : activations(N, 0),
-                      activations_out_observed(N, 0),
-                      partial_sums(N, 0),
-                      partial_sums_observed(N, 0),
-                      partial_sums_expected(N, 0) {
+    pe_tb(sc_module_name nm, sc_int<8> w = 0) : sc_module(nm),
+                                                weight(w),
+                                                activations(N, 0),
+                                                activations_out_observed(N, 0),
+                                                partial_sums(N, 0),
+                                                partial_sums_observed(N, 0),
+                                                partial_sums_expected(N, 0) {
+        SC_HAS_PROCESS(pe_tb);
         SC_THREAD(gen_stimuli);
         dont_initialize();
         sensitive << clk.pos();
@@ -36,6 +37,7 @@ public:
     }
 
 private:
+    sc_int<8> weight;
     vector<sc_int<8>> activations;
     vector<sc_int<8>> activations_out_observed;
     vector<sc_int<32>> partial_sums;
