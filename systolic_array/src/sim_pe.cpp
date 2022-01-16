@@ -40,7 +40,7 @@ void simulate_pe() {
     pe0.activation_out(activation_out);
     pe0.partial_sum_out(partial_sum_out);
 
-    pe_tb pe_tb0("PE_TB0");
+    pe_tb<100> pe_tb0("PE_TB0");
     pe_tb0.clk(clk);
     pe_tb0.activation_out(activation_in);
     pe_tb0.partial_sum_out(partial_sum_in);

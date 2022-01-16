@@ -8,11 +8,14 @@
 #define PE_TB_H
 
 #include "util.h"
+#include <vector>
 #include <systemc.h>
 
-const sc_int<8> weight = 4;
-const int num_samples = 100;
+using namespace std;
 
+const sc_int<8> weight = 4;
+
+template<uint32_t N>
 SC_MODULE (pe_tb) {
 public:
     sc_in<bool> clk;
@@ -21,25 +24,29 @@ public:
     sc_out<sc_int<8>> activation_out;
     sc_out<sc_int<32>> partial_sum_out;
 
-    SC_CTOR (pe_tb) {
+    SC_CTOR (pe_tb) : activations(N, 0),
+                      activations_out_observed(N, 0),
+                      partial_sums(N, 0),
+                      partial_sums_observed(N, 0),
+                      partial_sums_expected(N, 0) {
         SC_THREAD(gen_stimuli);
         dont_initialize();
         sensitive << clk.pos();
+        init_data();
     }
 
 private:
-    sc_int<8> activations[num_samples];
-    sc_int<8> activations_out_observed[num_samples];
-    sc_int<32> partial_sums[num_samples];
-    sc_int<32> partial_sums_observed[num_samples];
-    sc_int<32> partial_sums_expected[num_samples];
+    vector<sc_int<8>> activations;
+    vector<sc_int<8>> activations_out_observed;
+    vector<sc_int<32>> partial_sums;
+    vector<sc_int<32>> partial_sums_observed;
+    vector<sc_int<32>> partial_sums_expected;
 
     // Generate stimuli for PE
     void gen_stimuli() {
-        init_data();
         wait();
 
-        for (int i = 0; i < num_samples; ++i) {
+        for (int i = 0; i < N; ++i) {
             activation_out.write(activations[i]);
             partial_sum_out.write(partial_sums[i]);
             wait();
@@ -51,10 +58,10 @@ private:
         sc_stop();
     }
 
-    // Initialize activations and partial_sums to random numbers
+    // Initialize activations and partial sums to random values
     void init_data() {
-        for (int i = 0; i < num_samples; ++i) {
-            activations[i] = random(-127, 127);
+        for (int i = 0; i < N; ++i) {
+            activations[i] = random(-128, 127);
             partial_sums[i] = random(0, 1000);
             partial_sums_expected[i] = partial_sums[i] + activations[i] * weight;
         }
@@ -62,7 +69,7 @@ private:
 
     // Validate PE results
     void validate_results() {
-        for (int i = 1; i < num_samples; ++i) {
+        for (int i = 1; i < N; ++i) {
             sc_assert(partial_sums_observed[i] == partial_sums_expected[i-1]);
             sc_assert(activations_out_observed[i] == activations[i-1]);
         }
