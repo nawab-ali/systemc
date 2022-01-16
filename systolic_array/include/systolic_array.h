@@ -22,13 +22,14 @@ public:
     sc_vector<sc_in<sc_int<32>>> partial_sum_in{"partial_sum_in", N};
     sc_vector<sc_out<sc_int<32>>> partial_sum_out{"partial_sum_out", N};
 
-    SC_CTOR (systolic_array) : pe_grid(N, vector<pe>(N, pe("PE", random(-128, 127)))),
+    SC_CTOR (systolic_array) : pe_grid(N, vector<pe>(N, pe("PE"))),
                                activation_out(N, sc_out<sc_int<8>>()),
                                activation_s(N, vector<sc_signal<sc_int<8>>>(N-1, sc_signal<sc_int<8>>())),
                                partial_sum_s(N-1, vector<sc_signal<sc_int<32>>>(N, sc_signal<sc_int<32>>())) {
         SC_METHOD(matmul);
         dont_initialize();
         sensitive << clk.pos();
+        load_weights();
     }
 
 private:
@@ -92,6 +93,15 @@ private:
                     pe_grid[i][j].activation_out(activation_s[i][j]);
                     pe_grid[i][j].partial_sum_out(partial_sum_s[i][j]);
                 }
+            }
+        }
+    }
+
+    // Load random weights into the PEs
+    void load_weights() {
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < N; ++j) {
+                pe_grid[i][j].set_weight(random(-128, 127));
             }
         }
     }
