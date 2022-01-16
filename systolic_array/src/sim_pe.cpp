@@ -24,7 +24,7 @@ sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<sc_in
     return fp;
 }
 
-void simulate_pe(const sc_int<8> weight) {
+void simulate_pe(const sc_int<8>& weight) {
     sc_trace_file* fp;
     sc_clock clk("clk", 10, SC_NS, 0.5, 1, SC_NS);
 
@@ -33,7 +33,8 @@ void simulate_pe(const sc_int<8> weight) {
     sc_signal<sc_int<8>> activation_out;
     sc_signal<sc_int<32>> partial_sum_out;
 
-    pe pe0("PE0", weight);
+    pe pe0("PE0");
+    pe0.set_weight(weight);
     pe0.clk(clk);
     pe0.activation_in(activation_in);
     pe0.partial_sum_in(partial_sum_in);

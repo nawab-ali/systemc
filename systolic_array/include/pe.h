@@ -17,11 +17,19 @@ public:
     sc_out<sc_int<8>> activation_out;
     sc_out<sc_int<32>> partial_sum_out;
 
-    pe(sc_module_name nm, sc_int<8> w = 0) : sc_module(nm), weight(w) {
+    explicit pe(const sc_module_name& nm, const sc_int<8>& w = 0) : sc_module(nm), weight(w) {
         SC_HAS_PROCESS(pe);
         SC_METHOD(mac);
         dont_initialize();
         sensitive << clk.pos();
+    }
+
+    void set_weight(const sc_int<8>& w) {
+        weight = w;
+    }
+
+    sc_int<8> get_weight() {
+        return weight;
     }
 
 private:
