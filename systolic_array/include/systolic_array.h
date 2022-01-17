@@ -23,9 +23,9 @@ public:
     sc_vector<sc_out<sc_int<32>>> partial_sum_out{"partial_sum_out", N};
 
     SC_CTOR (systolic_array) : pe_grid(N, vector<pe>(N, pe("PE"))),
-                               activation_out(N, sc_out<sc_int<8>>()),
-                               activation_s(N, vector<sc_signal<sc_int<8>>>(N-1, sc_signal<sc_int<8>>())),
-                               partial_sum_s(N-1, vector<sc_signal<sc_int<32>>>(N, sc_signal<sc_int<32>>())) {
+                               activation_out(N, sc_out<sc_int<8>>("activation_out")),
+                               activation_s(N, vector<sc_signal<sc_int<8>>>(N-1, sc_signal<sc_int<8>>("activation_s"))),
+                               partial_sum_s(N-1, vector<sc_signal<sc_int<32>>>(N, sc_signal<sc_int<32>>("partial_sum_s"))) {
         SC_METHOD(matmul);
         dont_initialize();
         sensitive << clk.pos();
