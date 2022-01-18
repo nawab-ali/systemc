@@ -8,7 +8,10 @@
 #define SYSTOLIC_ARRAY_TB_H
 
 #include "util.h"
+#include <iostream>
 #include <systemc.h>
+
+using namespace std;
 
 template<uint8_t N>
 SC_MODULE (systolic_array_tb) {
@@ -28,6 +31,23 @@ private:
     // Generate stimuli for Systolic Array
     void gen_stimuli() {
         wait();
+
+        // Initialize partial_sum_in to 0
+        for (auto psum_in : partial_sum_in) {
+            psum_in.write(0);
+        }
+
+        // Initialize activation_in to random values
+        for (auto a_in : activation_in) {
+            a_in.write(random(-128, 127));
+        }
+
+        wait(N);
+
+        for (auto psum_out : partial_sum_out) {
+            cout << psum_out.read() << endl;
+        }
+
         sc_stop();
     }
 };

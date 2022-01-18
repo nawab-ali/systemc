@@ -12,4 +12,6 @@ link_directories(${CMAKE_PREFIX_PATH}/lib)
 # Executables
 include_directories(include)
 add_executable(sim_pe src/sim_pe.cpp)
+add_executable(sim_systolic_array src/sim_systolic_array.cpp)
 target_link_libraries(sim_pe systemc)
+target_link_libraries(sim_systolic_array systemc)
