@@ -23,21 +23,29 @@ void simulate_systolic_array() {
     sc_trace_file* fp;
     sc_clock clk("clk", 10, SC_NS, 0.5, 1, SC_NS);
 
-    sc_vector<sc_signal<sc_int<8>>> activation_in{"activation_in", N};
-    sc_vector<sc_signal<sc_int<32>>> partial_sum_in{"partial_sum_in", N};
-    sc_vector<sc_signal<sc_int<32>>> partial_sum_out{"partial_sum_out", N};
+    sc_signal<sc_int<8>> activation_in[N];
+    sc_signal<sc_int<32>> partial_sum_in[N];
+    sc_signal<sc_int<8>> activation_out[N];
+    sc_signal<sc_int<32>> partial_sum_out[N];
 
     systolic_array<N> sa("systolic_array");
-    sa.clk(clk);
-    sa.activation_in(activation_in);
-    sa.partial_sum_in(partial_sum_in);
-    sa.partial_sum_out(partial_sum_out);
-
     systolic_array_tb<N> sa_tb("systolic_array_tb");
+
+    sa.clk(clk);
     sa_tb.clk(clk);
-    sa_tb.activation_in(activation_in);
-    sa_tb.partial_sum_in(partial_sum_in);
-    sa_tb.partial_sum_out(partial_sum_out);
+
+    // Link the systolic array with the test bench
+    for (int i = 0; i < N; ++i) {
+        sa.activation_in[i](activation_in[i]);
+        sa.partial_sum_in[i](partial_sum_in[i]);
+        sa.activation_out[i](activation_out[i]);
+        sa.partial_sum_out[i](partial_sum_out[i]);
+
+        sa_tb.activation_in[i](activation_in[i]);
+        sa_tb.partial_sum_in[i](partial_sum_in[i]);
+        sa_tb.activation_out[i](activation_out[i]);
+        sa_tb.partial_sum_out[i](partial_sum_out[i]);
+    }
 
     fp = create_vcd_trace("systolic_array", clk);
     sc_start(200, SC_NS);

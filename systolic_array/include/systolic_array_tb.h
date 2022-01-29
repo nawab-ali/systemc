@@ -17,9 +17,10 @@ template<uint8_t N>
 SC_MODULE (systolic_array_tb) {
 public:
     sc_in<bool> clk;
-    sc_vector<sc_out<sc_int<8>>> activation_in{"activation_in", N};
-    sc_vector<sc_out<sc_int<32>>> partial_sum_in{"partial_sum_in", N};
-    sc_vector<sc_in<sc_int<32>>> partial_sum_out{"partial_sum_out", N};
+    sc_out<sc_int<8>> activation_in[N];
+    sc_out<sc_int<32>> partial_sum_in[N];
+    sc_in<sc_int<8>> activation_out[N];
+    sc_in<sc_int<32>> partial_sum_out[N];
 
     SC_CTOR (systolic_array_tb) {
         SC_THREAD(gen_stimuli);
@@ -32,21 +33,18 @@ private:
     void gen_stimuli() {
         wait();
 
-        // Initialize partial_sum_in to 0
-        for (auto psum_in : partial_sum_in) {
-            psum_in.write(0);
-        }
-
-        // Initialize activation_in to random values
-        for (auto a_in : activation_in) {
-            a_in.write(random(-128, 127));
+        // Initialize activations and partial sums
+        for (int i = 0; i < N; ++i) {
+            partial_sum_in[i].write(0);
+            activation_in[i].write(random(-128, 127));
         }
 
         wait(N);
 
-        for (auto psum_out : partial_sum_out) {
-            cout << psum_out.read() << endl;
+        for (int i = 0; i < N; ++i) {
+            cout << partial_sum_out[i].read() << " ";
         }
+        cout << endl;
 
         sc_stop();
     }

@@ -8,10 +8,7 @@
 #define PE_TB_H
 
 #include "util.h"
-#include <vector>
 #include <systemc.h>
-
-using namespace std;
 
 template<uint32_t N>
 SC_MODULE (pe_tb) {
@@ -22,27 +19,28 @@ public:
     sc_out<sc_int<8>> activation_out;
     sc_out<sc_int<32>> partial_sum_out;
 
-    explicit pe_tb(const sc_module_name& nm, const sc_int<8>& w = 0) : sc_module(nm),
-                                                                       weight(w),
-                                                                       activations(N, 0),
-                                                                       activations_out_observed(N, 0),
-                                                                       partial_sums(N, 0),
-                                                                       partial_sums_observed(N, 0),
-                                                                       partial_sums_expected(N, 0) {
-        SC_HAS_PROCESS(pe_tb);
+    SC_CTOR (pe_tb) : weight(0) {
         SC_THREAD(gen_stimuli);
         dont_initialize();
         sensitive << clk.pos();
         init_data();
     }
 
+    void set_weight(const sc_int<8>& w) {
+        weight = w;
+    }
+
+    sc_int<8> get_weight() {
+        return weight;
+    }
+
 private:
     sc_int<8> weight;
-    vector<sc_int<8>> activations;
-    vector<sc_int<8>> activations_out_observed;
-    vector<sc_int<32>> partial_sums;
-    vector<sc_int<32>> partial_sums_observed;
-    vector<sc_int<32>> partial_sums_expected;
+    sc_int<8> activations[N] = {0};
+    sc_int<8> activations_out_observed[N] = {0};
+    sc_int<32> partial_sums[N] = {0};
+    sc_int<32> partial_sums_observed[N] = {0};
+    sc_int<32> partial_sums_expected[N] = {0};
 
     // Generate stimuli for PE
     void gen_stimuli() {
@@ -56,6 +54,7 @@ private:
             activations_out_observed[i] = activation_in.read();
         }
 
+        wait();
         validate_results();
         sc_stop();
     }

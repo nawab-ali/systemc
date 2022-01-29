@@ -17,8 +17,7 @@ public:
     sc_out<sc_int<8>> activation_out;
     sc_out<sc_int<32>> partial_sum_out;
 
-    explicit pe(const sc_module_name& nm, const sc_int<8>& w = 0) : sc_module(nm), weight(w) {
-        SC_HAS_PROCESS(pe);
+    SC_CTOR (pe) : weight(0) {
         SC_METHOD(mac);
         dont_initialize();
         sensitive << clk.pos();
