@@ -8,7 +8,10 @@
 #define PE_TB_H
 
 #include "util.h"
+#include <vector>
 #include <systemc.h>
+
+using namespace std;
 
 template<uint32_t N>
 SC_MODULE (pe_tb) {
@@ -19,7 +22,9 @@ public:
     sc_out<sc_int<8>> activation_out;
     sc_out<sc_int<32>> partial_sum_out;
 
-    SC_CTOR (pe_tb) : weight(0) {
+    SC_CTOR (pe_tb) : weight(0), activations(N, 0), activations_out_observed(N, 0),
+                      partial_sums(N, 0), partial_sums_observed(N, 0),
+                      partial_sums_expected(N, 0) {
         SC_THREAD(gen_stimuli);
         dont_initialize();
         sensitive << clk.pos();
@@ -36,11 +41,11 @@ public:
 
 private:
     sc_int<8> weight;
-    sc_int<8> activations[N] = {0};
-    sc_int<8> activations_out_observed[N] = {0};
-    sc_int<32> partial_sums[N] = {0};
-    sc_int<32> partial_sums_observed[N] = {0};
-    sc_int<32> partial_sums_expected[N] = {0};
+    vector<sc_int<8>> activations;
+    vector<sc_int<8>> activations_out_observed;
+    vector<sc_int<32>> partial_sums;
+    vector<sc_int<32>> partial_sums_observed;
+    vector<sc_int<32>> partial_sums_expected;
 
     // Generate stimuli for PE
     void gen_stimuli() {
