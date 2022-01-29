@@ -15,10 +15,10 @@ template<uint8_t N>
 SC_MODULE (systolic_array) {
 public:
     sc_in<bool> clk;
-    sc_in<sc_int<8>> activation_in[N];
-    sc_in<sc_int<32>> partial_sum_in[N];
-    sc_out<sc_int<8>> activation_out[N];
-    sc_out<sc_int<32>> partial_sum_out[N];
+    sc_vector<sc_in<sc_int<8>>> activation_in{"activation_in", N};
+    sc_vector<sc_in<sc_int<32>>> partial_sum_in{"partial_sum_in", N};
+    sc_vector<sc_out<sc_int<8>>> activation_out{"activation_out", N};
+    sc_vector<sc_out<sc_int<32>>> partial_sum_out{"partial_sum_out", N};
 
     SC_CTOR (systolic_array) {
         for (int i = 0; i < N; ++i) {
