@@ -9,7 +9,10 @@
 
 #include "pe.h"
 #include "util.h"
+#include <vector>
 #include <systemc.h>
+
+using namespace std;
 
 template<uint8_t N>
 SC_MODULE (systolic_array) {
@@ -20,7 +23,7 @@ public:
     sc_vector<sc_out<sc_int<8>>> activation_out{"activation_out", N};
     sc_vector<sc_out<sc_int<32>>> partial_sum_out{"partial_sum_out", N};
 
-    SC_CTOR (systolic_array) {
+    SC_CTOR (systolic_array) : pe_grid(N, vector<pe*>(N, nullptr)) {
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < N; ++j) {
                 char name[16];
@@ -83,7 +86,8 @@ public:
     }
 
 private:
-    pe* pe_grid[N][N];
+    //pe* pe_grid[N][N];
+    vector<vector<pe*>> pe_grid;
     sc_signal<sc_int<8>> activation_s[N][N-1];
     sc_signal<sc_int<32>> partial_sum_s[N-1][N];
 };
