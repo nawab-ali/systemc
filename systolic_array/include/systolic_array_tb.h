@@ -40,13 +40,22 @@ private:
         }
 
         wait(N);
+        print_results();
+        sc_stop();
+    }
 
-        for (int i = 0; i < N; ++i) {
-            cout << partial_sum_out[i].read() << " ";
+    void print_results() {
+        cout << "partial_sum_out" << endl;
+        for (auto& psum : partial_sum_out) {
+            cout << psum.read() << " ";
         }
         cout << endl;
 
-        sc_stop();
+        cout << "activation_out" << endl;
+        for (auto& a : activation_out) {
+            cout << static_cast<int32_t>(a.read()) << " ";
+        }
+        cout << endl;
     }
 };
 
