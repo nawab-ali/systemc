@@ -86,15 +86,15 @@ public:
     }
 
     ~systolic_array() {
-        for (int i = 0; i < N; ++i) {
-            for (int j = 0; j < N; ++j) {
-                delete pe_grid[i][j];
+        for (auto& v : pe_grid) {
+            for (auto& p : v) {
+                delete p;
             }
         }
     }
 
 private:
-    vector<vector<pe*>> pe_grid;
+    vector<vector<pe *>> pe_grid;
     sc_signal<sc_int<8>> activation_s[N][N-1];
     sc_signal<sc_int<32>> partial_sum_s[N-1][N];
 };
