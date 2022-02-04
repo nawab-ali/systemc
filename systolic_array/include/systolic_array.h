@@ -23,7 +23,7 @@ public:
     sc_vector<sc_out<sc_int<8>>> activation_out{"activation_out", N};
     sc_vector<sc_out<sc_int<32>>> partial_sum_out{"partial_sum_out", N};
 
-    SC_CTOR (systolic_array) : pe_grid(N, vector<pe*>(N, nullptr)) {
+    SC_CTOR (systolic_array) : pe_grid(N, vector<pe *>(N, nullptr)) {
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < N; ++j) {
                 char name[16];
