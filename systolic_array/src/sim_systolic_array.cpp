@@ -34,7 +34,7 @@ void simulate_systolic_array() {
     sa.clk(clk);
     sa_tb.clk(clk);
 
-    // Link the systolic array with the test bench
+    // Link the Systolic Array with the test bench
     sa.activation_in(activation_in);
     sa.partial_sum_in(partial_sum_in);
     sa.activation_out(activation_out);
