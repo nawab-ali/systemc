@@ -49,16 +49,13 @@ private:
 
     // Monitor the partial_sum_out and activation_out values every cycle
     void monitor() {
-        cout << "--" << endl;
-        cout << "time: " << sc_time_stamp() << endl;
-
-        cout << "partial_sum_out: ";
+        cout << "time: " << sc_time_stamp() << " partial_sum_out: ";
         for (auto& psum : partial_sum_out) {
             cout << psum.read() << " ";
         }
         cout << endl;
 
-        cout << "activation_out: ";
+        cout << "time: " << sc_time_stamp() << " activation_out: ";
         for (auto& a : activation_out) {
             cout << static_cast<int32_t>(a.read()) << " ";
         }
