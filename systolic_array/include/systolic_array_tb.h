@@ -26,6 +26,10 @@ public:
         SC_THREAD(gen_stimuli);
         dont_initialize();
         sensitive << clk.pos();
+
+        SC_METHOD(monitor);
+        dont_initialize();
+        sensitive << clk.pos();
     }
 
 private:
@@ -39,19 +43,22 @@ private:
             activation_in[i].write(random(-128, 127));
         }
 
-        wait(N);
-        print_results();
+        wait(N+1);
         sc_stop();
     }
 
-    void print_results() {
-        cout << "partial_sum_out" << endl;
+    // Monitor the partial_sum_out and activation_out values every cycle
+    void monitor() {
+        cout << "--" << endl;
+        cout << "time: " << sc_time_stamp() << endl;
+
+        cout << "partial_sum_out: ";
         for (auto& psum : partial_sum_out) {
             cout << psum.read() << " ";
         }
         cout << endl;
 
-        cout << "activation_out" << endl;
+        cout << "activation_out: ";
         for (auto& a : activation_out) {
             cout << static_cast<int32_t>(a.read()) << " ";
         }
