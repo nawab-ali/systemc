@@ -7,7 +7,10 @@
 #ifndef PE_H
 #define PE_H
 
+#include <iostream>
 #include <systemc.h>
+
+using namespace std;
 
 SC_MODULE (pe) {
 public:
@@ -39,9 +42,14 @@ private:
         sc_int<8> activation = activation_in.read();
         sc_int<32> partial_sum = partial_sum_in.read();
 
+        cout << "time:" << sc_time_stamp() << " " << name() << " a_in:" << activation << " p_in:" <<
+        partial_sum << " w:" << weight;
+
         partial_sum += activation * weight;
         activation_out.write(activation);
         partial_sum_out.write(partial_sum);
+
+        cout << " p_out:" << partial_sum << endl;
     }
 };
 

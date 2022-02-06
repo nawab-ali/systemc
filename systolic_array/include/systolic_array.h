@@ -24,7 +24,12 @@ public:
     sc_vector<sc_out<sc_int<32>>> partial_sum_out{"partial_sum_out", N};
 
     SC_CTOR (systolic_array) : pe_grid(N, vector<pe *>(N, nullptr)) {
+        SC_METHOD(monitor);
+        dont_initialize();
+        sensitive << clk.pos();
+
         // Create a NxN Systolic Array
+        int8_t count = 1;
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < N; ++j) {
                 char name[16];
@@ -33,7 +38,8 @@ public:
                 // Initialize PEs
                 pe_grid[i][j] = new pe(name);
                 pe_grid[i][j]->clk(clk);
-                pe_grid[i][j]->set_weight(random(-128, 127));
+                //pe_grid[i][j]->set_weight(random(-128, 127));
+                pe_grid[i][j]->set_weight(count++);
 
                 // Connect the PEs via signals
                 if (i == 0 && j == 0) {
@@ -98,6 +104,15 @@ private:
     vector<vector<pe *>> pe_grid;
     sc_signal<sc_int<8>> activation_s[N][N-1];
     sc_signal<sc_int<32>> partial_sum_s[N-1][N];
+
+    // Monitor activation_in values every cycle
+    void monitor() {
+        cout << "time:" << sc_time_stamp() << " activation_in: ";
+        for (auto& a : activation_in) {
+            cout << static_cast<int32_t>(a.read()) << " ";
+        }
+        cout << endl;
+    }
 };
 
 #endif //SYSTOLIC_ARRAY_H

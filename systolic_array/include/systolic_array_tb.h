@@ -35,27 +35,33 @@ public:
 private:
     // Generate stimuli for Systolic Array
     void gen_stimuli() {
+        vector<vector<int8_t>> activations = {{1,0,0}, {2,4,0}, {3,5,7}, {0,6,8}, {0,0,9}};
+
         wait();
 
         // Initialize activations and partial sums
-        for (int i = 0; i < N; ++i) {
-            partial_sum_in[i].write(0);
-            activation_in[i].write(random(-128, 127));
+        for (auto& a : activations) {
+            for (int i = 0; i < N; ++i) {
+                partial_sum_in[i].write(0);
+                //activation_in[i].write(random(-128, 127));
+                activation_in[i].write(a[i]);
+            }
+            wait();
         }
 
-        wait(N+1);
+        wait(2*N-1);
         sc_stop();
     }
 
     // Monitor the partial_sum_out and activation_out values every cycle
     void monitor() {
-        cout << "time: " << sc_time_stamp() << " partial_sum_out: ";
+        cout << "time:" << sc_time_stamp() << " partial_sum_out: ";
         for (auto& psum : partial_sum_out) {
             cout << psum.read() << " ";
         }
         cout << endl;
 
-        cout << "time: " << sc_time_stamp() << " activation_out: ";
+        cout << "time:" << sc_time_stamp() << " activation_out: ";
         for (auto& a : activation_out) {
             cout << static_cast<int32_t>(a.read()) << " ";
         }
