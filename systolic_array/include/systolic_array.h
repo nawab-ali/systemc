@@ -29,7 +29,6 @@ public:
         sensitive << clk.pos();
 
         // Create a NxN Systolic Array
-        int8_t count = 1;
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < N; ++j) {
                 char name[16];
@@ -39,7 +38,7 @@ public:
                 pe_grid[i][j] = new pe(name);
                 pe_grid[i][j]->clk(clk);
                 //pe_grid[i][j]->set_weight(random(-128, 127));
-                pe_grid[i][j]->set_weight(count++);
+                pe_grid[i][j]->set_weight(static_cast<int8_t>(i*N+j+1));
 
                 // Connect the PEs via signals
                 if (i == 0 && j == 0) {
