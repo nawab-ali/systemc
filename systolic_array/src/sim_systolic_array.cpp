@@ -18,9 +18,9 @@ sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk) {
     return fp;
 }
 
-void simulate_systolic_array() {
-    const uint8_t N = 3;
+void simulate_systolic_array(const char* file) {
     sc_trace_file* fp;
+    const uint8_t N = 3;
     sc_clock clk("clk", 10, SC_NS, 0.5, 1, SC_NS);
 
     sc_vector<sc_signal<sc_int<8>>> activation_in{"activation_in", N};
@@ -45,13 +45,24 @@ void simulate_systolic_array() {
     sa_tb.activation_out(activation_out);
     sa_tb.partial_sum_out(partial_sum_out);
 
-    fp = create_vcd_trace("systolic_array", clk);
+    fp = create_vcd_trace(file, clk);
+
+    SC_REPORT_INFO("sc_main", "Simulation starts");
     sc_start(200, SC_NS);
     sc_close_vcd_trace_file(fp);
+    SC_REPORT_INFO("sc_main", "Simulation ends");
 }
 
 int sc_main(int argc, char** argv) {
+    const char* vcd_file = "systolic_array";
+    const char* log_file = "systolic_array.log";
+
     srand(time(nullptr));
-    simulate_systolic_array();
+    sc_report_handler::set_log_file_name(log_file);
+    sc_report_handler::set_actions("pe", SC_INFO, SC_LOG);
+    sc_report_handler::set_actions("systolic_array", SC_INFO, SC_LOG);
+    sc_report_handler::set_actions("systolic_array_tb", SC_INFO, SC_LOG);
+
+    simulate_systolic_array(vcd_file);
     return 0;
 }

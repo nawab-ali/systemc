@@ -9,6 +9,7 @@
 
 #include "pe.h"
 #include "util.h"
+#include <string>
 #include <vector>
 #include <systemc.h>
 
@@ -106,11 +107,13 @@ private:
 
     // Monitor activation_in values every cycle
     void monitor() {
-        cout << "time:" << sc_time_stamp() << " activation_in: ";
+        string log = "activation_in: ";
+
         for (auto& a : activation_in) {
-            cout << static_cast<int32_t>(a.read()) << " ";
+            log += to_string(static_cast<int32_t>(a.read())) + " ";
         }
-        cout << endl;
+
+        SC_REPORT_INFO("systolic_array", log.c_str());
     }
 };
 

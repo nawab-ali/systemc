@@ -8,10 +8,7 @@
 #define SYSTOLIC_ARRAY_TB_H
 
 #include "util.h"
-#include <iostream>
 #include <systemc.h>
-
-using namespace std;
 
 template<uint8_t N>
 SC_MODULE (systolic_array_tb) {
@@ -49,23 +46,26 @@ private:
             wait();
         }
 
-        wait(2*N-1);
+        // Wait 2N-1 cycles for the matrix multiplication to complete. We've already waited 1 cycle in the above for
+        // loop.
+        wait(2*N-2);
         sc_stop();
     }
 
     // Monitor the partial_sum_out and activation_out values every cycle
     void monitor() {
-        cout << "time:" << sc_time_stamp() << " partial_sum_out: ";
-        for (auto& psum : partial_sum_out) {
-            cout << psum.read() << " ";
-        }
-        cout << endl;
+        string log = "partial_sum_out: ";
 
-        cout << "time:" << sc_time_stamp() << " activation_out: ";
-        for (auto& a : activation_out) {
-            cout << static_cast<int32_t>(a.read()) << " ";
+        for (auto& psum : partial_sum_out) {
+            log += to_string(psum.read()) + " ";
         }
-        cout << endl;
+        SC_REPORT_INFO("systolic_array_tb", log.c_str());
+
+        log = "activation_out: ";
+        for (auto& a : activation_out) {
+            log += to_string(static_cast<int32_t>(a.read())) + " ";
+        }
+        SC_REPORT_INFO("systolic_array_tb", log.c_str());
     }
 };
 

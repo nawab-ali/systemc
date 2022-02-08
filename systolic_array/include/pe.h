@@ -7,7 +7,7 @@
 #ifndef PE_H
 #define PE_H
 
-#include <iostream>
+#include <string>
 #include <systemc.h>
 
 using namespace std;
@@ -41,15 +41,15 @@ private:
     void mac() {
         sc_int<8> activation = activation_in.read();
         sc_int<32> partial_sum = partial_sum_in.read();
-
-        cout << "time:" << sc_time_stamp() << " " << name() << " a_in:" << activation << " p_in:" <<
-        partial_sum << " w:" << weight;
+        string log = string(name()) + " a_in:" + to_string(activation) + " p_in:" + to_string(partial_sum)
+                     + " w:" + to_string(weight);
 
         partial_sum += activation * weight;
         activation_out.write(activation);
         partial_sum_out.write(partial_sum);
 
-        cout << " p_out:" << partial_sum << endl;
+        log += " p_out:" + to_string(partial_sum);
+        SC_REPORT_INFO("pe", log.c_str());
     }
 };
 
