@@ -24,7 +24,7 @@ sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<sc_in
     return fp;
 }
 
-void simulate_pe(const sc_int<8>& weight) {
+void simulate_pe(const sc_int<8>& weight, const char* file) {
     sc_trace_file* fp;
     sc_clock clk("clk", 10, SC_NS, 0.5, 1, SC_NS);
 
@@ -49,15 +49,23 @@ void simulate_pe(const sc_int<8>& weight) {
     pe_tb0.partial_sum_in(partial_sum_out);
     pe_tb0.set_weight(weight);
 
-    fp = create_vcd_trace("pe", clk, activation_in, partial_sum_in, activation_out, partial_sum_out);
+    fp = create_vcd_trace(file, clk, activation_in, partial_sum_in, activation_out, partial_sum_out);
+
+    SC_REPORT_INFO("sc_main", "Simulation starts");
     sc_start(200, SC_NS);
     sc_close_vcd_trace_file(fp);
+    SC_REPORT_INFO("sc_main", "Simulation ends");
 }
 
 int sc_main(int argc, char** argv) {
     const sc_int<8> weight = 4;
+    const char* vcd_file = "pe";
+    const char* log_file = "pe.log";
 
     srand(time(nullptr));
-    simulate_pe(weight);
+    sc_report_handler::set_log_file_name(log_file);
+    sc_report_handler::set_actions("pe", SC_INFO, SC_LOG);
+
+    simulate_pe(weight, vcd_file);
     return 0;
 }
