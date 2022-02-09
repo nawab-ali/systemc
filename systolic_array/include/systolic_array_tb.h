@@ -32,7 +32,8 @@ public:
 private:
     // Generate stimuli for Systolic Array
     void gen_stimuli() {
-        vector<vector<int8_t>> activations = {{1,0,0}, {2,4,0}, {3,5,7}, {0,6,8}, {0,0,9}};
+        vector<vector<int8_t>> activations = {{1,0,0,0}, {2,5,0,0}, {3,6,9,0}, {4,7,10,13}, {0,8,11,14},
+                                              {0,0,12,15}, {0,0,0,16}};
 
         wait();
 
@@ -40,7 +41,6 @@ private:
         for (auto& a : activations) {
             for (int i = 0; i < N; ++i) {
                 partial_sum_in[i].write(0);
-                //activation_in[i].write(random(-128, 127));
                 activation_in[i].write(a[i]);
             }
             wait();

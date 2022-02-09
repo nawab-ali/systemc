@@ -20,7 +20,7 @@ sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk) {
 
 void simulate_systolic_array(const char* file) {
     sc_trace_file* fp;
-    const uint8_t N = 3;
+    const uint8_t N = 4;
     sc_clock clk("clk", 10, SC_NS, 0.5, 1, SC_NS);
 
     sc_vector<sc_signal<sc_int<8>>> activation_in{"activation_in", N};
@@ -48,7 +48,7 @@ void simulate_systolic_array(const char* file) {
     fp = create_vcd_trace(file, clk);
 
     SC_REPORT_INFO("sc_main", "Simulation starts");
-    sc_start(200, SC_NS);
+    sc_start(1000, SC_NS);
     sc_close_vcd_trace_file(fp);
     SC_REPORT_INFO("sc_main", "Simulation ends");
 }

@@ -39,7 +39,6 @@ public:
                 pe_grid[i][j] = new pe(name);
                 pe_grid[i][j]->clk(clk);
                 pe_grid[i][j]->set_weight(random(-128, 127));
-                //pe_grid[i][j]->set_weight(static_cast<int8_t>(i*N+j+1));
 
                 // Connect the PEs via signals
                 if (i == 0 && j == 0) {
