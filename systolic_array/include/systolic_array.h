@@ -32,12 +32,13 @@ public:
         // Create a NxN Systolic Array
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < N; ++j) {
-                char name[16];
-                snprintf(name, 16, "PE_%d_%d", i, j);
-
                 // Initialize PEs
-                pe_grid[i][j] = new pe(name);
+                string name = "PE_" + to_string(i) + "_" + to_string(j);
+                pe_grid[i][j] = new pe(name.c_str());
                 pe_grid[i][j]->clk(clk);
+
+                // The weight matrix should be transposed before being loaded in the systolic array.
+                // I'm using random weights for now.
                 pe_grid[i][j]->set_weight(random(-128, 127));
 
                 // Connect the PEs via signals
@@ -111,7 +112,6 @@ private:
         for (auto& a : activation_in) {
             log += to_string(static_cast<int32_t>(a.read())) + " ";
         }
-
         SC_REPORT_INFO("systolic_array", log.c_str());
     }
 };
