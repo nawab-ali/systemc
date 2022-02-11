@@ -6,21 +6,39 @@
 
 #include <ctime>
 #include <cstdlib>
+#include <string>
 #include <systemc.h>
 #include "systolic_array.h"
 #include "systolic_array_tb.h"
 
-sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk) {
+const uint8_t N = 4;
+
+sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk,
+                                sc_vector<sc_signal<sc_int<8>>>& activation_in,
+                                sc_vector<sc_signal<sc_int<32>>>& partial_sum_in,
+                                sc_vector<sc_signal<sc_int<8>>>& activation_out,
+                                sc_vector<sc_signal<sc_int<32>>>& partial_sum_out) {
+    string name;
     sc_trace_file* fp = sc_create_vcd_trace_file(file);
 
     sc_trace(fp, clk, "clk");
+
+    for (int i = 0; i < N; ++i) {
+        name = "activation_in_" + to_string(i);
+        sc_trace(fp, activation_in[i], name.c_str());
+        name = "partial_sum_in_" + to_string(i);
+        sc_trace(fp, partial_sum_in[i], name.c_str());
+        name = "activation_out_" + to_string(i);
+        sc_trace(fp, activation_out[i], name.c_str());
+        name = "partial_sum_out_" + to_string(i);
+        sc_trace(fp, partial_sum_out[i], name.c_str());
+    }
 
     return fp;
 }
 
 void simulate_systolic_array(const char* file) {
     sc_trace_file* fp;
-    const uint8_t N = 4;
     sc_clock clk("clk", 10, SC_NS, 0.5, 1, SC_NS);
 
     sc_vector<sc_signal<sc_int<8>>> activation_in{"activation_in", N};
@@ -45,7 +63,7 @@ void simulate_systolic_array(const char* file) {
     sa_tb.activation_out(activation_out);
     sa_tb.partial_sum_out(partial_sum_out);
 
-    fp = create_vcd_trace(file, clk);
+    fp = create_vcd_trace(file, clk, activation_in, partial_sum_in, activation_out, partial_sum_out);
 
     SC_REPORT_INFO("sc_main", "Simulation starts");
     sc_start(1000, SC_NS);
