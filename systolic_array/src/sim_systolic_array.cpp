@@ -5,8 +5,8 @@
  */
 
 #include <ctime>
-#include <cstdlib>
 #include <string>
+#include <cstdlib>
 #include <systemc.h>
 #include "systolic_array.h"
 #include "systolic_array_tb.h"
