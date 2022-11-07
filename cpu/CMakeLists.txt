@@ -12,4 +12,6 @@ link_directories(${CMAKE_PREFIX_PATH}/lib)
 # Executables
 include_directories(include)
 add_executable(sim_cpu src/sim_cpu.cpp)
+add_executable(sim_instr_decoder src/sim_instr_decoder.cpp)
 target_link_libraries(sim_cpu systemc)
+target_link_libraries(sim_instr_decoder systemc)
