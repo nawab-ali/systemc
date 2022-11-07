@@ -17,7 +17,7 @@ SC_MODULE (instr_decoder_tb) {
 public:
     sc_out<sc_uint<32>> instr;
     sc_in<sc_uint<8>> opcode, dest, src2, src1;
-    
+
     SC_CTOR (instr_decoder_tb) {
         SC_THREAD(gen_stimuli);
     }
@@ -25,7 +25,7 @@ public:
 private:
     void gen_stimuli(void) {
         sc_uint<32> mask = 0xFF;
-        
+
         for (int j = 0; j < 5; j++) {
             sc_uint<32> i = random(0, 1000000000);
 

@@ -7,7 +7,7 @@
 #ifndef INSTR_DECODER
 #define INSTR_DECODER
 
-#include <string>
+#include <sstream>
 #include <systemc.h>
 
 using namespace std;
@@ -18,7 +18,7 @@ SC_MODULE (instr_decoder) {
 public:
     sc_in<sc_uint<32>> instr;
     sc_out<sc_uint<8>> opcode, dest, src2, src1;
-    
+
     SC_CTOR (instr_decoder) {
         SC_METHOD(decode);
         dont_initialize();
@@ -27,6 +27,7 @@ public:
 
 private:
     void decode(void) {
+        stringstream stream;
         sc_uint<32> mask = 0xFF;
 
         sc_uint<32> i = instr.read();
@@ -34,14 +35,15 @@ private:
         src2.write((i >> 8) & mask);
         dest.write((i >> 16) & mask);
         opcode.write((i >> 24) & mask);
-        
-        string log = string(name()) +
-                     " - instr:" + to_string(i) +
-                     " opcode:" + to_string(static_cast<sc_uint<8>>((i >> 24) & mask)) +
-                     " dest:" + to_string(static_cast<sc_uint<8>>((i >> 16) & mask)) +
-                     " src2:" + to_string(static_cast<sc_uint<8>>((i >> 8) & mask)) +
-                     " src1:" + to_string(static_cast<sc_uint<8>>(i & mask));
-        SC_REPORT_INFO("", log.c_str());
+
+        stream << name();
+        stream << " - instr:0x" << hex << i;
+        stream << " opcode:0x" << hex << static_cast<sc_uint<8>>((i >> 24) & mask);
+        stream << " dest:0x" << hex << static_cast<sc_uint<8>>((i >> 16) & mask);
+        stream << " src2:0x" << hex << static_cast<sc_uint<8>>((i >> 8) & mask);
+        stream << " src1:0x" << hex << static_cast<sc_uint<8>>(i & mask);
+
+        SC_REPORT_INFO("", stream.str().c_str());
     }
 };
 

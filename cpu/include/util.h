@@ -9,7 +9,7 @@
 
 #include <cstdlib>
 
-int random(int min, int max){
+int random(const int min, const int max) {
     return min + rand() / (RAND_MAX / (max - min + 1) + 1);
 }
 
