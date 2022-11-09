@@ -26,7 +26,7 @@ private:
     void gen_stimuli(void) {
         sc_uint<32> mask = 0xFF;
 
-        for (int j = 0; j < 5; j++) {
+        for (int j = 0; j < 1000; j++) {
             sc_uint<32> i = random(0, 1000000000);
 
             instr.write(i);

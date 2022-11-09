@@ -29,7 +29,7 @@ void simulate_instr_decoder(void) {
     id_tb.src1(src1);
 
     SC_REPORT_INFO("sc_main", "Simulation starts");
-    sc_start(200, SC_NS);
+    sc_start(1000, SC_NS);
     SC_REPORT_INFO("sc_main", "Simulation ends");
 }
 
