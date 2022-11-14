@@ -11,6 +11,7 @@
 #include <systemc.h>
 
 SC_MODULE (alu_tb) {
+public:
     sc_out<bool> reset;
     sc_out<sc_uint<4>> opcode;
     sc_out<sc_int<32>> operand1, operand2;
@@ -23,6 +24,7 @@ SC_MODULE (alu_tb) {
         sensitive << clk.pos();
     }
 
+private:
     void gen_stimuli() {
         wait();
 

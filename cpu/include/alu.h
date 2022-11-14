@@ -7,6 +7,7 @@
 #ifndef ALU_H
 #define ALU_H
 
+#include <sstream>
 #include <systemc.h>
 
 using namespace std;
@@ -14,6 +15,7 @@ using namespace std;
 enum ops{AND, OR, XOR, NOT, CMP, ADD, SUB};
 
 SC_MODULE (alu) {
+public:
     sc_in<bool> reset;
     sc_in<sc_uint<4>> opcode;
     sc_in<sc_int<32>> operand1, operand2;
@@ -24,6 +26,23 @@ SC_MODULE (alu) {
         SC_METHOD(compute);
         dont_initialize();
         sensitive << operand1 << operand2 << opcode << reset;
+    }
+
+private:
+    // Log ALU operation
+    void log() {
+        stringstream stream;
+
+        stream << name();
+        stream << " - opcode:0x" << hex << opcode.read();
+        stream << " operand1:0x" << hex << operand1.read();
+        stream << " operand2:0x" << hex << operand2.read();
+        stream << " result:0x" << hex << result.read();
+        stream << " carry:0x" << hex << carry.read();
+        stream << " zero:0x" << hex << zero.read();
+        stream << " reset:0x" << hex << reset.read();
+
+        SC_REPORT_INFO("", stream.str().c_str());
     }
 
     // Compute ALU operations
@@ -85,7 +104,8 @@ SC_MODULE (alu) {
             carry.write(r[32]);
         }
 
-        // Log TBD
+        // Log operation
+        log();
     }
 };
 

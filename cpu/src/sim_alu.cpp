@@ -4,9 +4,11 @@
  * @author Nawab Ali
  */
 
+#include <ctime>
+#include <cstdlib>
+#include <systemc.h>
 #include "alu.h"
 #include "alu_tb.h"
-#include <systemc.h>
 
 void simulate_alu() {
     sc_signal<sc_uint<4>> opcode;
@@ -38,7 +40,9 @@ void simulate_alu() {
 }
 
 int sc_main(int argc, char** argv) {
-    // Log TBD
+    srand(time(nullptr));
+    sc_report_handler::set_log_file_name("alu.log");
+    sc_report_handler::set_actions("alu", SC_INFO, SC_LOG);
     simulate_alu();
     return 0;
 }
