@@ -12,6 +12,8 @@
 
 using namespace std;
 
+const sc_uint<32> mask = 0xFF;
+
 // Decode a 32-bit instruction and return the opcode, src, and destination registers
 // instr = [opcode|dest|src2|src1]
 SC_MODULE (instr_decoder) {
@@ -26,15 +28,10 @@ public:
     }
 
 private:
-    void decode(void) {
+    // Log operation
+    void log(void) {
         stringstream stream;
-        sc_uint<32> mask = 0xFF;
-
         sc_uint<32> i = instr.read();
-        src1.write(i & mask);
-        src2.write((i >> 8) & mask);
-        dest.write((i >> 16) & mask);
-        opcode.write((i >> 24) & mask);
 
         stream << name();
         stream << " - instr:0x" << hex << i;
@@ -44,6 +41,19 @@ private:
         stream << " src1:0x" << hex << static_cast<sc_uint<8>>(i & mask);
 
         SC_REPORT_INFO("", stream.str().c_str());
+    }
+
+    // Decode instruction
+    void decode(void) {
+        sc_uint<32> i = instr.read();
+
+        src1.write(i & mask);
+        src2.write((i >> 8) & mask);
+        dest.write((i >> 16) & mask);
+        opcode.write((i >> 24) & mask);
+
+        // Log operation
+        log();
     }
 };
 
