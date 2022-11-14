@@ -30,7 +30,7 @@ public:
 
 private:
     // Log ALU operation
-    void log() {
+    void log(void) {
         stringstream stream;
 
         stream << name();
@@ -46,7 +46,7 @@ private:
     }
 
     // Compute ALU operations
-    void compute() {
+    void compute(void) {
         sc_int<33> r = 0;
         sc_int<32> data1 = operand1.read();
         sc_int<32> data2 = operand2.read();

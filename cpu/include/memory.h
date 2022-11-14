@@ -38,7 +38,7 @@ private:
     vector<dtype> data;
 
     // Log operation
-    void log() {
+    void log(void) {
         stringstream stream;
         sc_uint<addr_bits> addr = address.read();
 
