@@ -24,8 +24,6 @@ public:
 
 private:
     void gen_stimuli(void) {
-        sc_uint<32> mask = 0xFF;
-
         for (int j = 0; j < 1000; j++) {
             sc_uint<32> i = random(0, 1000000000);
 
@@ -36,6 +34,7 @@ private:
             sc_assert(src2.read() == ((i >> 8) & mask));
             sc_assert(src1.read() == (i & mask));
         }
+
         sc_stop();
     }
 };
