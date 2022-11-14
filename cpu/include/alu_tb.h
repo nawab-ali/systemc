@@ -25,7 +25,7 @@ public:
     }
 
 private:
-    void gen_stimuli() {
+    void gen_stimuli(void) {
         wait();
 
         // Test ALU ops
