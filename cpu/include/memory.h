@@ -13,7 +13,7 @@
 
 using namespace std;
 
-enum memop{READ, WRITE};
+enum memops{READ, WRITE};
 
 template<typename dtype, uint32_t size = 256, uint32_t addr_bits = 8>
 SC_MODULE (memory) {
@@ -44,7 +44,7 @@ private:
             sc_uint<addr_bits> addr = address.read();
             sc_assert(addr >= 0 && addr < size);
 
-            if (cmd.read() == WRITE) {
+            if (cmd.read() == memops::WRITE) {
                 data[addr] = data_in.read();
             } else {
                 data_out.write(data[addr]);
