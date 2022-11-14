@@ -37,9 +37,21 @@ public:
 private:
     vector<dtype> data;
 
-    void process_cmd(void) {
+    // Log operation
+    void log() {
         stringstream stream;
+        sc_uint<addr_bits> addr = address.read();
 
+        stream << name();
+        stream << " - cmd:" << cmd.read();
+        stream << " address:0x" << hex << addr;
+        stream << " data:0x" << hex << data[addr];
+
+        SC_REPORT_INFO("", stream.str().c_str());
+    }
+
+    // Process memory command
+    void process_cmd(void) {
         if (enable.read()) {
             sc_uint<addr_bits> addr = address.read();
             sc_assert(addr >= 0 && addr < size);
@@ -50,12 +62,8 @@ private:
                 data_out.write(data[addr]);
             }
 
-            stream << name();
-            stream << " - cmd:" << cmd.read();
-            stream << " address:0x" << hex << addr;
-            stream << " data:0x" << hex << data[addr];
-
-            SC_REPORT_INFO("", stream.str().c_str());
+            // Log operation
+            log();
         }
     }
 };
