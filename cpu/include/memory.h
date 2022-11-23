@@ -18,7 +18,7 @@ enum memops{READ, WRITE};
 template<typename dtype, uint32_t size = 256, uint32_t addr_bits = 8>
 SC_MODULE (memory) {
 public:
-    sc_in<bool> clk, enable, cmd;
+    sc_in<bool> enable, cmd;
     sc_in<sc_uint<addr_bits>> address;
     sc_in<dtype> data_in;
     sc_out<dtype> data_out;
@@ -26,7 +26,7 @@ public:
     SC_CTOR (memory) : data(size, 0) {
         SC_METHOD(process_cmd);
         dont_initialize();
-        sensitive << clk.pos();
+        sensitive << enable << cmd << address << data_in;
     }
 
     ~memory() {

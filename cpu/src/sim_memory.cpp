@@ -18,7 +18,6 @@ void simulate_memory(void) {
     sc_clock clk("clk", 10, SC_NS, 0.5, 1, SC_NS);
     
     memory<sc_uint<32>, 1024, 10> mem("memory0");
-    mem.clk(clk);
     mem.enable(enable);
     mem.cmd(cmd);
     mem.address(address);
