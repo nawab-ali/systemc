@@ -10,13 +10,13 @@
 #include "d_ff.h"
 #include <systemc.h>
 
-SC_MODULE (shift_reg) {
+SC_MODULE(shift_reg) {
     sc_in<bool> clk, din;
     sc_out<bool> r0, r1, r2, r3;
     d_ff dff0, dff1, dff2, dff3;
     sc_signal<bool> s0, s1, s2;
 
-    SC_CTOR (shift_reg) : dff0("dff0"), dff1("dff1"), dff2("dff2"), dff3("dff3") {
+    SC_CTOR(shift_reg) : dff0("dff0"), dff1("dff1"), dff2("dff2"), dff3("dff3") {
         SC_METHOD(shift_right);
         dont_initialize();
         sensitive << s0 << s1 << s2;
@@ -45,4 +45,4 @@ SC_MODULE (shift_reg) {
     }
 };
 
-#endif //SHIFT_REG_H
+#endif // SHIFT_REG_H

@@ -9,20 +9,18 @@
 
 #include <systemc.h>
 
-SC_MODULE (nand) {
-	sc_in<bool> input_1;
-	sc_in<bool> input_2;
-	sc_out<bool> output;
+SC_MODULE(nand) {
+    sc_in<bool> input_1;
+    sc_in<bool> input_2;
+    sc_out<bool> output;
 
-	SC_CTOR (nand) {
-		SC_METHOD(compute_nand);
-		dont_initialize();
-		sensitive << input_1 << input_2;
-	}
+    SC_CTOR(nand) {
+        SC_METHOD(compute_nand);
+        dont_initialize();
+        sensitive << input_1 << input_2;
+    }
 
-	void compute_nand() {
-		output.write(!(input_1.read() && input_2.read()));
-	}
+    void compute_nand() { output.write(!(input_1.read() && input_2.read())); }
 };
 
-#endif //NAND_H
+#endif // NAND_H

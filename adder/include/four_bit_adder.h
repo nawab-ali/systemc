@@ -7,19 +7,19 @@
 #ifndef FOUR_BIT_ADDER_H
 #define FOUR_BIT_ADDER_H
 
-#include <systemc.h>
 #include "full_adder.h"
+#include <systemc.h>
 
-SC_MODULE (four_bit_adder) {
+SC_MODULE(four_bit_adder) {
     sc_in<bool> c_in;
     sc_in<sc_uint<4>> a, b;
     sc_out<bool> c_out;
     sc_out<sc_uint<4>> sum;
-    
+
     full_adder fa0, fa1, fa2, fa3;
     sc_signal<bool> s_a[4], s_b[4], c[3], s[4];
 
-    SC_CTOR (four_bit_adder) : fa0("full_adder_0"), fa1("full_adder_1"), fa2("full_adder_2"), fa3("full_adder_3") {
+    SC_CTOR(four_bit_adder) : fa0("full_adder_0"), fa1("full_adder_1"), fa2("full_adder_2"), fa3("full_adder_3") {
         SC_METHOD(read_inputs);
         dont_initialize();
         sensitive << a << b;
@@ -73,4 +73,4 @@ SC_MODULE (four_bit_adder) {
     }
 };
 
-#endif //FOUR_BIT_ADDER_H
+#endif // FOUR_BIT_ADDER_H

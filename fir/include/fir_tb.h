@@ -13,17 +13,15 @@
 using namespace std;
 
 // Compare 2 double values
-bool cmpd(double actual, double expected, double epsilon = 0.005f) {
-    return (fabs(actual - expected) < epsilon);
-}
+bool cmpd(double actual, double expected, double epsilon = 0.005f) { return (fabs(actual - expected) < epsilon); }
 
-SC_MODULE (fir_tb) {
+SC_MODULE(fir_tb) {
     sc_in<bool> clk;
     sc_in<double> result;
     sc_out<bool> reset;
     sc_out<double> sample;
 
-    SC_CTOR (fir_tb) {
+    SC_CTOR(fir_tb) {
         SC_THREAD(gen_stimuli);
         dont_initialize();
         sensitive << clk.pos();
@@ -32,10 +30,22 @@ SC_MODULE (fir_tb) {
     void gen_stimuli() {
         const int num_samples = 16;
         double samples[num_samples] = {1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
-        double results[num_samples] = {0.0, -0.07556556070608, 0.09129209297815, 0.47697917208036, 0.47697917208036,
-                                       0.09129209297815, -0.07556556070608, 0.0, 0.0, -0.07556556070608,
-                                       0.01572653227208, 0.49270570435244, 0.96968487643279, 1.06097696941095,
-                                       0.98541140870487, 0.98541140870487};
+        double results[num_samples] = {0.0,
+                                       -0.07556556070608,
+                                       0.09129209297815,
+                                       0.47697917208036,
+                                       0.47697917208036,
+                                       0.09129209297815,
+                                       -0.07556556070608,
+                                       0.0,
+                                       0.0,
+                                       -0.07556556070608,
+                                       0.01572653227208,
+                                       0.49270570435244,
+                                       0.96968487643279,
+                                       1.06097696941095,
+                                       0.98541140870487,
+                                       0.98541140870487};
 
         wait();
         reset.write(true);
@@ -57,4 +67,4 @@ SC_MODULE (fir_tb) {
     }
 };
 
-#endif //FIR_TB_H
+#endif // FIR_TB_H

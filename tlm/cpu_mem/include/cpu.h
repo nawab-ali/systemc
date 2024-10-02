@@ -7,20 +7,20 @@
 #ifndef CPU_H
 #define CPU_H
 
-#include <tlm.h>
 #include <iostream>
 #include <systemc.h>
+#include <tlm.h>
 #include <tlm_utils/simple_initiator_socket.h>
 
 using namespace std;
 
-SC_MODULE (Cpu) {
+SC_MODULE(Cpu) {
     int data;
-    tlm::tlm_generic_payload* trans;
+    tlm::tlm_generic_payload *trans;
     // TLM-2 socket, defaults to 32-bits wide, base protocol
     tlm_utils::simple_initiator_socket<Cpu> socket;
 
-    SC_CTOR (Cpu) : socket("socket") {
+    SC_CTOR(Cpu) : socket("socket") {
         trans = new tlm::tlm_generic_payload;
         SC_THREAD(generate_payload);
     }
@@ -38,7 +38,7 @@ SC_MODULE (Cpu) {
 
             trans->set_command(cmd);
             trans->set_address(i);
-            trans->set_data_ptr(reinterpret_cast<unsigned char*>(&data));
+            trans->set_data_ptr(reinterpret_cast<unsigned char *>(&data));
             trans->set_data_length(4);
             trans->set_streaming_width(4);
             trans->set_byte_enable_ptr(0);
@@ -58,9 +58,7 @@ SC_MODULE (Cpu) {
         }
     }
 
-    ~Cpu() {
-        delete trans;
-    }
+    ~Cpu() { delete trans; }
 };
 
-#endif //CPU_H
+#endif // CPU_H

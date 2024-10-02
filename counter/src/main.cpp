@@ -4,13 +4,13 @@
  * @author Nawab Ali
  */
 
-#include <systemc.h>
 #include "counter.h"
 #include "counter_tb.h"
+#include <systemc.h>
 
-sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<bool>& reset, sc_signal<bool>& enable,
-                                sc_signal<sc_uint<4>>& out) {
-    sc_trace_file* fp = sc_create_vcd_trace_file(file);
+sc_trace_file *create_vcd_trace(const char *file, sc_clock &clk, sc_signal<bool> &reset, sc_signal<bool> &enable,
+                                sc_signal<sc_uint<4>> &out) {
+    sc_trace_file *fp = sc_create_vcd_trace_file(file);
 
     sc_trace(fp, clk, "clk");
     sc_trace(fp, reset, "reset");
@@ -21,7 +21,7 @@ sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<bool>
 }
 
 void simulate_counter() {
-    sc_trace_file* fp;
+    sc_trace_file *fp;
     sc_signal<bool> reset;
     sc_signal<bool> enable;
     sc_signal<sc_uint<4>> out;
@@ -43,7 +43,7 @@ void simulate_counter() {
     sc_close_vcd_trace_file(fp);
 }
 
-int sc_main(int argc, char** argv) {
+int sc_main(int argc, char **argv) {
     simulate_counter();
     return 0;
 }

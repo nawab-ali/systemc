@@ -4,13 +4,13 @@
  * @author Nawab Ali
  */
 
-#include <systemc.h>
 #include "half_adder.h"
 #include "half_adder_tb.h"
+#include <systemc.h>
 
-sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& a, sc_signal<bool>& b, sc_signal<bool>& sum,
-                                sc_signal<bool>& carry) {
-    sc_trace_file* fp = sc_create_vcd_trace_file(file);
+sc_trace_file *create_vcd_trace(const char *file, sc_signal<bool> &a, sc_signal<bool> &b, sc_signal<bool> &sum,
+                                sc_signal<bool> &carry) {
+    sc_trace_file *fp = sc_create_vcd_trace_file(file);
 
     sc_trace(fp, a, "a");
     sc_trace(fp, b, "b");
@@ -21,7 +21,7 @@ sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& a, sc_signal<
 }
 
 void simulate_half_adder() {
-    sc_trace_file* fp;
+    sc_trace_file *fp;
     sc_signal<bool> a, b;
     sc_signal<bool> sum, carry;
 
@@ -40,7 +40,7 @@ void simulate_half_adder() {
     sc_close_vcd_trace_file(fp);
 }
 
-int sc_main(int argc, char** argv) {
+int sc_main(int argc, char **argv) {
     simulate_half_adder();
     return 0;
 }

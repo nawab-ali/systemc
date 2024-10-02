@@ -9,12 +9,12 @@
 
 #include <systemc.h>
 
-SC_MODULE (two_four_decoder_tb) {
+SC_MODULE(two_four_decoder_tb) {
     sc_in<bool> clk;
     sc_out<bool> enable;
     sc_out<sc_uint<2>> input;
 
-    SC_CTOR (two_four_decoder_tb) {
+    SC_CTOR(two_four_decoder_tb) {
         SC_THREAD(gen_stimuli);
         dont_initialize();
         sensitive << clk.pos();
@@ -39,4 +39,4 @@ SC_MODULE (two_four_decoder_tb) {
     }
 };
 
-#endif //TWO_FOUR_DECODER_TB_H
+#endif // TWO_FOUR_DECODER_TB_H

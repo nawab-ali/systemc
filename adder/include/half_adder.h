@@ -9,11 +9,11 @@
 
 #include <systemc.h>
 
-SC_MODULE (half_adder) {
+SC_MODULE(half_adder) {
     sc_in<bool> a, b;
     sc_out<bool> sum, carry;
 
-    SC_CTOR (half_adder) {
+    SC_CTOR(half_adder) {
         SC_METHOD(add);
         dont_initialize();
         sensitive << a << b;
@@ -25,4 +25,4 @@ SC_MODULE (half_adder) {
     }
 };
 
-#endif //HALF_ADDER_H
+#endif // HALF_ADDER_H

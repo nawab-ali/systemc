@@ -1,6 +1,7 @@
 /**
  * @file counter.h
- * @brief This file implements a 4-bit up-counter with synchronous active high reset and active high enable signal.
+ * @brief This file implements a 4-bit up-counter with synchronous active high
+ * reset and active high enable signal.
  * @author Nawab Ali
  */
 
@@ -12,7 +13,7 @@
 
 using namespace std;
 
-SC_MODULE (counter) {
+SC_MODULE(counter) {
     sc_in<bool> clk;
     sc_in<bool> reset;
     sc_in<bool> enable;
@@ -20,7 +21,7 @@ SC_MODULE (counter) {
 
     sc_uint<4> count;
 
-    SC_CTOR (counter) {
+    SC_CTOR(counter) {
         SC_METHOD(incr_count);
         dont_initialize();
         sensitive << clk.pos() << reset;
@@ -39,9 +40,7 @@ SC_MODULE (counter) {
         out.write(count);
     }
 
-    void monitor() {
-        cout << "Timestamp: " << sc_time_stamp() << " Counter: " << out.read() << endl;
-    }
+    void monitor() { cout << "Timestamp: " << sc_time_stamp() << " Counter: " << out.read() << endl; }
 };
 
-#endif //COUNTER_H
+#endif // COUNTER_H

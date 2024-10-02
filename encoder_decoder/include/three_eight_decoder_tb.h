@@ -9,12 +9,12 @@
 
 #include <systemc.h>
 
-SC_MODULE (three_eight_decoder_tb) {
+SC_MODULE(three_eight_decoder_tb) {
     sc_in<bool> clk;
     sc_out<bool> enable;
     sc_out<sc_uint<3>> input;
 
-    SC_CTOR (three_eight_decoder_tb) {
+    SC_CTOR(three_eight_decoder_tb) {
         SC_THREAD(gen_stimuli);
         dont_initialize();
         sensitive << clk.pos();
@@ -39,4 +39,4 @@ SC_MODULE (three_eight_decoder_tb) {
     }
 };
 
-#endif //THREE_EIGHT_DECODER_TB_H
+#endif // THREE_EIGHT_DECODER_TB_H

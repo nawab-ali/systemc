@@ -10,31 +10,31 @@
 #include "nand.h"
 #include <systemc.h>
 
-SC_MODULE (exor) {
-	sc_in<bool> input_1;
-	sc_in<bool> input_2;
-	sc_out<bool> output;
+SC_MODULE(exor) {
+    sc_in<bool> input_1;
+    sc_in<bool> input_2;
+    sc_out<bool> output;
 
-	nand n1, n2, n3, n4;
-	sc_signal<bool> s1, s2, s3;
+    nand n1, n2, n3, n4;
+    sc_signal<bool> s1, s2, s3;
 
-	SC_CTOR (exor): n1("nand1"), n2("nand2"), n3("nand3"), n4("nand4") {
-		n1.input_1(input_1);
-		n1.input_2(input_2);
-		n1.output(s1);
+    SC_CTOR(exor) : n1("nand1"), n2("nand2"), n3("nand3"), n4("nand4") {
+        n1.input_1(input_1);
+        n1.input_2(input_2);
+        n1.output(s1);
 
-		n2.input_1(input_1);
-		n2.input_2(s1);
-		n2.output(s2);
+        n2.input_1(input_1);
+        n2.input_2(s1);
+        n2.output(s2);
 
-		n3.input_1(s1);
-		n3.input_2(input_2);
-		n3.output(s3);
+        n3.input_1(s1);
+        n3.input_2(input_2);
+        n3.output(s3);
 
-		n4.input_1(s2);
-		n4.input_2(s3);
-		n4.output(output);
-	}
+        n4.input_1(s2);
+        n4.input_2(s3);
+        n4.output(output);
+    }
 };
 
-#endif //EXOR_H
+#endif // EXOR_H

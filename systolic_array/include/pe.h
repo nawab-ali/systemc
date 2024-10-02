@@ -12,37 +12,33 @@
 
 using namespace std;
 
-SC_MODULE (pe) {
-public:
+SC_MODULE(pe) {
+  public:
     sc_in<bool> clk;
     sc_in<sc_int<8>> activation_in;
     sc_in<sc_int<32>> partial_sum_in;
     sc_out<sc_int<8>> activation_out;
     sc_out<sc_int<32>> partial_sum_out;
 
-    SC_CTOR (pe) : weight(0) {
+    SC_CTOR(pe) : weight(0) {
         SC_METHOD(mac);
         dont_initialize();
         sensitive << clk.pos();
     }
 
-    void set_weight(const sc_int<8>& w) {
-        weight = w;
-    }
+    void set_weight(const sc_int<8> &w) { weight = w; }
 
-    sc_int<8> get_weight() {
-        return weight;
-    }
+    sc_int<8> get_weight() { return weight; }
 
-private:
+  private:
     sc_int<8> weight;
 
     // Multiply-and-Accumulate
     void mac() {
         sc_int<8> activation = activation_in.read();
         sc_int<32> partial_sum = partial_sum_in.read();
-        string log = string(name()) + " a_in:" + to_string(activation) + " p_in:" + to_string(partial_sum)
-                     + " w:" + to_string(weight);
+        string log = string(name()) + " a_in:" + to_string(activation) + " p_in:" + to_string(partial_sum) +
+                     " w:" + to_string(weight);
 
         partial_sum += activation * weight;
         activation_out.write(activation);
@@ -53,4 +49,4 @@ private:
     }
 };
 
-#endif //PE_H
+#endif // PE_H

@@ -9,7 +9,7 @@
 
 #define SC_INCLUDE_DYNAMIC_PROCESSES
 
-int sc_main(int argc, char** argv) {
+int sc_main(int argc, char **argv) {
     srand(time(nullptr));
 
     Top top("top");

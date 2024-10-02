@@ -8,38 +8,33 @@
 #define PE_TB_H
 
 #include "util.h"
-#include <vector>
 #include <systemc.h>
+#include <vector>
 
 using namespace std;
 
-template<uint32_t N>
-SC_MODULE (pe_tb) {
-public:
+template <uint32_t N> SC_MODULE(pe_tb) {
+  public:
     sc_in<bool> clk;
     sc_in<sc_int<8>> activation_in;
     sc_in<sc_int<32>> partial_sum_in;
     sc_out<sc_int<8>> activation_out;
     sc_out<sc_int<32>> partial_sum_out;
 
-    SC_CTOR (pe_tb) : weight(0), activations(N, 0), activations_out_observed(N, 0),
-                      partial_sums(N, 0), partial_sums_observed(N, 0),
-                      partial_sums_expected(N, 0) {
+    SC_CTOR(pe_tb)
+        : weight(0), activations(N, 0), activations_out_observed(N, 0), partial_sums(N, 0), partial_sums_observed(N, 0),
+          partial_sums_expected(N, 0) {
         SC_THREAD(gen_stimuli);
         dont_initialize();
         sensitive << clk.pos();
         init_data();
     }
 
-    void set_weight(const sc_int<8>& w) {
-        weight = w;
-    }
+    void set_weight(const sc_int<8> &w) { weight = w; }
 
-    sc_int<8> get_weight() {
-        return weight;
-    }
+    sc_int<8> get_weight() { return weight; }
 
-private:
+  private:
     sc_int<8> weight;
     vector<sc_int<8>> activations;
     vector<sc_int<8>> activations_out_observed;
@@ -76,10 +71,10 @@ private:
     // Validate PE results
     void validate_results() {
         for (int i = 1; i < N; ++i) {
-            sc_assert(partial_sums_observed[i] == partial_sums_expected[i-1]);
-            sc_assert(activations_out_observed[i] == activations[i-1]);
+            sc_assert(partial_sums_observed[i] == partial_sums_expected[i - 1]);
+            sc_assert(activations_out_observed[i] == activations[i - 1]);
         }
     }
 };
 
-#endif //PE_TB_H
+#endif // PE_TB_H

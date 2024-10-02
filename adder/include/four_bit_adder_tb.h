@@ -7,15 +7,15 @@
 #ifndef FOUR_BIT_ADDER_TB_H
 #define FOUR_BIT_ADDER_TB_H
 
-#include <systemc.h>
 #include "four_bit_adder.h"
+#include <systemc.h>
 
-SC_MODULE (four_bit_adder_tb) {
+SC_MODULE(four_bit_adder_tb) {
     sc_in<bool> clk;
     sc_out<bool> c_in;
     sc_out<sc_uint<4>> a, b;
 
-    SC_CTOR (four_bit_adder_tb) {
+    SC_CTOR(four_bit_adder_tb) {
         SC_THREAD(gen_stimuli);
         dont_initialize();
         sensitive << clk.pos();
@@ -40,4 +40,4 @@ SC_MODULE (four_bit_adder_tb) {
     }
 };
 
-#endif //FOUR_BIT_ADDER_TB_H
+#endif // FOUR_BIT_ADDER_TB_H

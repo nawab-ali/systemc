@@ -9,11 +9,11 @@
 
 #include <systemc.h>
 
-SC_MODULE (counter_tb) {
+SC_MODULE(counter_tb) {
     sc_in<bool> clk;
     sc_out<bool> reset, enable;
 
-    SC_CTOR (counter_tb) {
+    SC_CTOR(counter_tb) {
         SC_THREAD(gen_stimuli);
         dont_initialize();
         sensitive << clk.pos();
@@ -38,4 +38,4 @@ SC_MODULE (counter_tb) {
     }
 };
 
-#endif //COUNTER_TB_H
+#endif // COUNTER_TB_H

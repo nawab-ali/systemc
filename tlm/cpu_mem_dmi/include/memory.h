@@ -7,20 +7,20 @@
 #ifndef MEMORY_H
 #define MEMORY_H
 
-#include <tlm.h>
 #include <systemc.h>
+#include <tlm.h>
 #include <tlm_utils/simple_target_socket.h>
 
-enum {SIZE = 256};
+enum { SIZE = 256 };
 
-SC_MODULE (Memory) {
+SC_MODULE(Memory) {
     int mem[SIZE];
     const sc_time latency;
 
     // TLM-2 socket, defaults to 32-bits wide, base protocol
     tlm_utils::simple_target_socket<Memory> socket;
-    
-    SC_CTOR (Memory) : socket("socket"), latency(10, SC_NS) {
+
+    SC_CTOR(Memory) : socket("socket"), latency(10, SC_NS) {
         // Register callbacks for incoming interface method calls
         socket.register_b_transport(this, &Memory::b_transport);
         socket.register_get_direct_mem_ptr(this, &Memory::get_direct_mem_ptr);
@@ -34,13 +34,13 @@ SC_MODULE (Memory) {
     }
 
     // TLM-2 blocking transport method
-    virtual void b_transport(tlm::tlm_generic_payload& trans, sc_time& delay) {
+    virtual void b_transport(tlm::tlm_generic_payload & trans, sc_time & delay) {
         tlm::tlm_response_status resp_status;
         tlm::tlm_command cmd = trans.get_command();
         sc_dt::uint64 addr = trans.get_address() / sizeof(int);
-        unsigned char* ptr = trans.get_data_ptr();
+        unsigned char *ptr = trans.get_data_ptr();
         unsigned int len = trans.get_data_length();
-        unsigned char* byte = trans.get_byte_enable_ptr();
+        unsigned char *byte = trans.get_byte_enable_ptr();
         unsigned int width = trans.get_streaming_width();
 
         // Check transaction for errors
@@ -66,11 +66,11 @@ SC_MODULE (Memory) {
     }
 
     // TLM-2 forward DMI method
-    virtual bool get_direct_mem_ptr(tlm::tlm_generic_payload& trans, tlm::tlm_dmi& dmi_data) {
+    virtual bool get_direct_mem_ptr(tlm::tlm_generic_payload & trans, tlm::tlm_dmi & dmi_data) {
         dmi_data.allow_read_write();
-        dmi_data.set_dmi_ptr(reinterpret_cast<unsigned char*>(&mem[0]));
+        dmi_data.set_dmi_ptr(reinterpret_cast<unsigned char *>(&mem[0]));
         dmi_data.set_start_address(0);
-        dmi_data.set_end_address(SIZE*sizeof(int) - 1);
+        dmi_data.set_end_address(SIZE * sizeof(int) - 1);
         dmi_data.set_read_latency(latency);
         dmi_data.set_write_latency(latency);
 
@@ -81,12 +81,12 @@ SC_MODULE (Memory) {
     void invalidate_dmi_ptr() {
         for (int i = 0; i < 4; ++i) {
             wait(latency * 8);
-            socket->invalidate_direct_mem_ptr(0, SIZE-1);
+            socket->invalidate_direct_mem_ptr(0, SIZE - 1);
         }
     }
 
-    tlm::tlm_response_status check_trans_error(sc_dt::uint64& addr, unsigned char* byte, unsigned int& len,
-                                               unsigned int& width) {
+    tlm::tlm_response_status check_trans_error(sc_dt::uint64 & addr, unsigned char *byte, unsigned int &len,
+                                               unsigned int &width) {
         if (addr >= sc_dt::uint64(SIZE)) {
             return tlm::TLM_ADDRESS_ERROR_RESPONSE;
         } else if (byte != 0) {
@@ -99,4 +99,4 @@ SC_MODULE (Memory) {
     }
 };
 
-#endif //MEMORY_H
+#endif // MEMORY_H

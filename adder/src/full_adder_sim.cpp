@@ -4,13 +4,13 @@
  * @author Nawab Ali
  */
 
-#include <systemc.h>
 #include "full_adder.h"
 #include "full_adder_tb.h"
+#include <systemc.h>
 
-sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& a, sc_signal<bool>& b, sc_signal<bool>& c_in,
-                                sc_signal<bool>& sum, sc_signal<bool>& c_out) {
-    sc_trace_file* fp = sc_create_vcd_trace_file(file);
+sc_trace_file *create_vcd_trace(const char *file, sc_signal<bool> &a, sc_signal<bool> &b, sc_signal<bool> &c_in,
+                                sc_signal<bool> &sum, sc_signal<bool> &c_out) {
+    sc_trace_file *fp = sc_create_vcd_trace_file(file);
 
     sc_trace(fp, a, "a");
     sc_trace(fp, b, "b");
@@ -22,7 +22,7 @@ sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& a, sc_signal<
 }
 
 void simulate_full_adder() {
-    sc_trace_file* fp;
+    sc_trace_file *fp;
     sc_signal<bool> a, b, c_in;
     sc_signal<bool> sum, c_out;
 
@@ -43,7 +43,7 @@ void simulate_full_adder() {
     sc_close_vcd_trace_file(fp);
 }
 
-int sc_main(int argc, char** argv) {
+int sc_main(int argc, char **argv) {
     simulate_full_adder();
     return 0;
 }

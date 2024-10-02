@@ -9,21 +9,18 @@
 
 #include <systemc.h>
 
-SC_MODULE (d_ff) {
+SC_MODULE(d_ff) {
     sc_in<bool> clk;
     sc_in<bool> din;
     sc_out<bool> dout;
 
-    SC_CTOR (d_ff) {
+    SC_CTOR(d_ff) {
         SC_METHOD(assign);
         dont_initialize();
         sensitive << clk.pos();
     }
 
-    void assign() {
-        dout.write(din.read());
-    }
+    void assign() { dout.write(din.read()); }
 };
 
-#endif //D_FF_H
-
+#endif // D_FF_H
