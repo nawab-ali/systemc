@@ -9,12 +9,12 @@
 #include <systemc.h>
 
 const unsigned int order = 5;
-const double coeff[order+1] = {-0.07556556070608, 0.09129209297815, 0.47697917208036,
-                               0.47697917208036, 0.09129209297815, -0.07556556070608};
+const double coeff[order + 1] = {-0.07556556070608, 0.09129209297815, 0.47697917208036,
+                                 0.47697917208036,  0.09129209297815, -0.07556556070608};
 
-sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<bool>& reset, sc_signal<double>& sample,
-                                sc_signal<double>& result) {
-    sc_trace_file* fp = sc_create_vcd_trace_file(file);
+sc_trace_file *create_vcd_trace(const char *file, sc_clock &clk, sc_signal<bool> &reset, sc_signal<double> &sample,
+                                sc_signal<double> &result) {
+    sc_trace_file *fp = sc_create_vcd_trace_file(file);
 
     sc_trace(fp, clk, "clk");
     sc_trace(fp, reset, "reset");
@@ -25,7 +25,7 @@ sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<bool>
 }
 
 void simulate_fir() {
-    sc_trace_file* fp;
+    sc_trace_file *fp;
     sc_signal<bool> reset;
     sc_signal<double> sample;
     sc_signal<double> result;
@@ -49,7 +49,7 @@ void simulate_fir() {
     sc_close_vcd_trace_file(fp);
 }
 
-int sc_main(int argc, char** argv) {
+int sc_main(int argc, char **argv) {
     simulate_fir();
     return 0;
 }

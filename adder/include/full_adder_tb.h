@@ -7,15 +7,13 @@
 #ifndef FULL_ADDER_TB_H
 #define FULL_ADDER_TB_H
 
-#include <systemc.h>
 #include "full_adder.h"
+#include <systemc.h>
 
-SC_MODULE (full_adder_tb) {
+SC_MODULE(full_adder_tb) {
     sc_out<bool> a, b, c_in;
 
-    SC_CTOR (full_adder_tb) {
-        SC_THREAD(stimulate);
-    }
+    SC_CTOR(full_adder_tb) { SC_THREAD(stimulate); }
 
     void stimulate() {
         sc_uint<3> input = 0;
@@ -33,4 +31,4 @@ SC_MODULE (full_adder_tb) {
     }
 };
 
-#endif //FULL_ADDER_TB_H
+#endif // FULL_ADDER_TB_H

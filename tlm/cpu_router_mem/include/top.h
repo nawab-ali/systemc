@@ -12,12 +12,12 @@
 #include "router.h"
 #include <systemc.h>
 
-SC_MODULE (Top) {
-    Cpu* cpu;
-    Router<4>* router;
-    Memory* memory[4];
+SC_MODULE(Top) {
+    Cpu *cpu;
+    Router<4> *router;
+    Memory *memory[4];
 
-    SC_CTOR (Top) {
+    SC_CTOR(Top) {
         cpu = new Cpu("cpu");
         router = new Router<4>("router");
         cpu->socket.bind(router->target_socket);
@@ -40,4 +40,4 @@ SC_MODULE (Top) {
     }
 };
 
-#endif //TOP_H
+#endif // TOP_H

@@ -9,15 +9,15 @@
 
 #include <systemc.h>
 
-enum Ops{ADD, SUBTRACT, INCR, DECR, AND, OR, NAND, XOR};
+enum Ops { ADD, SUBTRACT, INCR, DECR, AND, OR, NAND, XOR };
 
-SC_MODULE (alu) {
+SC_MODULE(alu) {
     sc_in<sc_uint<3>> opcode;
     sc_in<sc_uint<4>> operand1, operand2;
     sc_out<sc_uint<4>> result;
     sc_out<bool> carry, zero;
 
-    SC_CTOR (alu) {
+    SC_CTOR(alu) {
         SC_METHOD(operate);
         dont_initialize();
         sensitive << operand1 << operand2 << opcode;
@@ -31,32 +31,32 @@ SC_MODULE (alu) {
         zero.write(false);
 
         switch (opcode.read()) {
-            case Ops::ADD:
-                r = data1 + data2;
-                break;
-            case Ops::SUBTRACT:
-                r = data1 - data2;
-                break;
-            case Ops::INCR:
-                r = data1 + 1;
-                break;
-            case Ops::DECR:
-                r = data1 - 1;
-                break;
-            case Ops::AND:
-                r = data1 & data2;
-                break;
-            case Ops::OR:
-                r = data1 | data2;
-                break;
-            case Ops::NAND:
-                r.range(3, 0) = ~(data1 & data2);
-                break;
-            case Ops::XOR:
-                r = data1 ^ data2;
-                break;
-            default:
-                break;
+        case Ops::ADD:
+            r = data1 + data2;
+            break;
+        case Ops::SUBTRACT:
+            r = data1 - data2;
+            break;
+        case Ops::INCR:
+            r = data1 + 1;
+            break;
+        case Ops::DECR:
+            r = data1 - 1;
+            break;
+        case Ops::AND:
+            r = data1 & data2;
+            break;
+        case Ops::OR:
+            r = data1 | data2;
+            break;
+        case Ops::NAND:
+            r.range(3, 0) = ~(data1 & data2);
+            break;
+        case Ops::XOR:
+            r = data1 ^ data2;
+            break;
+        default:
+            break;
         }
 
         result.write(r.range(3, 0));
@@ -68,4 +68,4 @@ SC_MODULE (alu) {
     }
 };
 
-#endif //ALU_H
+#endif // ALU_H

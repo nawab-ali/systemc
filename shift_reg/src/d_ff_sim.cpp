@@ -8,7 +8,7 @@
 #include "d_ff_tb.h"
 #include <systemc.h>
 
-sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<bool>& din, sc_signal<bool>& dout) {
+sc_trace_file *create_vcd_trace(const char *file, sc_clock &clk, sc_signal<bool> &din, sc_signal<bool> &dout) {
     sc_trace_file *fp;
 
     fp = sc_create_vcd_trace_file(file);
@@ -40,7 +40,7 @@ void simulate() {
     sc_close_vcd_trace_file(fp);
 }
 
-int sc_main(int argc, char** argv) {
+int sc_main(int argc, char **argv) {
     simulate();
     return 0;
 }

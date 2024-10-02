@@ -4,13 +4,13 @@
  * @author Nawab Ali
  */
 
-#include <systemc.h>
 #include "four_two_encoder.h"
 #include "four_two_encoder_tb.h"
+#include <systemc.h>
 
-sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& enable, sc_signal<sc_uint<4>>& input,
-                                sc_signal<sc_uint<2>>& output) {
-    sc_trace_file* fp = sc_create_vcd_trace_file(file);
+sc_trace_file *create_vcd_trace(const char *file, sc_signal<bool> &enable, sc_signal<sc_uint<4>> &input,
+                                sc_signal<sc_uint<2>> &output) {
+    sc_trace_file *fp = sc_create_vcd_trace_file(file);
 
     sc_trace(fp, enable, "enable");
     sc_trace(fp, input, "input");
@@ -20,7 +20,7 @@ sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& enable, sc_si
 }
 
 void simulate_four_two_encoder() {
-    sc_trace_file* fp;
+    sc_trace_file *fp;
     sc_signal<bool> enable;
     sc_signal<sc_uint<4>> input;
     sc_signal<sc_uint<2>> output;
@@ -42,7 +42,7 @@ void simulate_four_two_encoder() {
     sc_close_vcd_trace_file(fp);
 }
 
-int sc_main(int argc, char** argv) {
+int sc_main(int argc, char **argv) {
     simulate_four_two_encoder();
     return 0;
 }

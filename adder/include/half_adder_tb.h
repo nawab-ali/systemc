@@ -9,12 +9,10 @@
 
 #include <systemc.h>
 
-SC_MODULE (half_adder_tb) {
+SC_MODULE(half_adder_tb) {
     sc_out<bool> a, b;
 
-    SC_CTOR (half_adder_tb) {
-        SC_THREAD(stimulate);
-    }
+    SC_CTOR(half_adder_tb) { SC_THREAD(stimulate); }
 
     void stimulate() {
         sc_uint<2> input = 0;
@@ -31,4 +29,4 @@ SC_MODULE (half_adder_tb) {
     }
 };
 
-#endif //HALF_ADDER_TB_H
+#endif // HALF_ADDER_TB_H

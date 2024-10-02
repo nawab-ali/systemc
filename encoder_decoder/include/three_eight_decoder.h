@@ -7,10 +7,10 @@
 #ifndef THREE_EIGHT_DECODER_H
 #define THREE_EIGHT_DECODER_H
 
-#include <systemc.h>
 #include "two_four_decoder.h"
+#include <systemc.h>
 
-SC_MODULE (three_eight_decoder) {
+SC_MODULE(three_eight_decoder) {
     sc_in<bool> enable;
     sc_in<sc_uint<3>> input;
     sc_out<sc_uint<8>> output;
@@ -20,7 +20,7 @@ SC_MODULE (three_eight_decoder) {
     sc_signal<sc_uint<2>> i;
     sc_signal<sc_uint<4>> o1, o2;
 
-    SC_CTOR (three_eight_decoder) : decoder_2x4_1("decoder_2x4_1"), decoder_2x4_2("decoder_2x4_2") {
+    SC_CTOR(three_eight_decoder) : decoder_2x4_1("decoder_2x4_1"), decoder_2x4_2("decoder_2x4_2") {
         SC_METHOD(process_input);
         dont_initialize();
         sensitive << input;
@@ -60,4 +60,4 @@ SC_MODULE (three_eight_decoder) {
     }
 };
 
-#endif //THREE_EIGHT_DECODER_H
+#endif // THREE_EIGHT_DECODER_H

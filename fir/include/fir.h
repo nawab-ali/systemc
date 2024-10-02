@@ -12,16 +12,15 @@
 
 using namespace std;
 
-template<unsigned int order, const double* coeff>
-SC_MODULE (fir) {
+template <unsigned int order, const double *coeff> SC_MODULE(fir) {
     sc_in<bool> clk;
     sc_in<bool> reset;
     sc_in<double> sample;
     sc_out<double> result;
 
-    double delay[order+1];
+    double delay[order + 1];
 
-    SC_CTOR (fir) {
+    SC_CTOR(fir) {
         SC_METHOD(process_signal);
         dont_initialize();
         sensitive << clk.pos();
@@ -51,8 +50,8 @@ SC_MODULE (fir) {
             }
 
             // Shift the delays to the right
-            for (int i = order-1; i >= 0; --i) {
-                delay[i+1] = delay[i];
+            for (int i = order - 1; i >= 0; --i) {
+                delay[i + 1] = delay[i];
             }
         }
 
@@ -61,8 +60,8 @@ SC_MODULE (fir) {
 
     void monitor() {
         cout << "Timestamp:  " << sc_time_stamp() << "\tsample: " << sample.read() << "\tresult: " << result.read()
-        << endl;
+             << endl;
     }
 };
 
-#endif //FIR_H
+#endif // FIR_H

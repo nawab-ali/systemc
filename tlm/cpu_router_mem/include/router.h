@@ -7,20 +7,19 @@
 #ifndef ROUTER_H
 #define ROUTER_H
 
-#include <tlm.h>
 #include <systemc.h>
-#include <tlm_utils/simple_target_socket.h>
+#include <tlm.h>
 #include <tlm_utils/simple_initiator_socket.h>
+#include <tlm_utils/simple_target_socket.h>
 
 const unsigned int size = 16;
 
-template <unsigned int num_targets>
-SC_MODULE (Router) {
+template <unsigned int num_targets> SC_MODULE(Router) {
     // TLM-2 socket, defaults to 32-bits wide, base protocol
     tlm_utils::simple_target_socket<Router> target_socket;
-    tlm_utils::simple_initiator_socket_tagged<Router>* initiator_socket[num_targets];
+    tlm_utils::simple_initiator_socket_tagged<Router> *initiator_socket[num_targets];
 
-    SC_CTOR (Router) : target_socket("target_socket") {
+    SC_CTOR(Router) : target_socket("target_socket") {
         // Register callbacks for incoming interface method calls
         target_socket.register_b_transport(this, &Router::b_transport);
         target_socket.register_get_direct_mem_ptr(this, &Router::get_direct_mem_ptr);
@@ -36,7 +35,7 @@ SC_MODULE (Router) {
     }
 
     // TLM-2 blocking transport method
-    virtual void b_transport(tlm::tlm_generic_payload& trans, sc_time& delay) {
+    virtual void b_transport(tlm::tlm_generic_payload & trans, sc_time & delay) {
         sc_dt::uint64 masked_address;
         sc_dt::uint64 address = trans.get_address();
         unsigned int target = decode_address(address, masked_address);
@@ -49,7 +48,7 @@ SC_MODULE (Router) {
     }
 
     // TLM-2 forward DMI method
-    virtual bool get_direct_mem_ptr(tlm::tlm_generic_payload& trans, tlm::tlm_dmi& dmi_data) {
+    virtual bool get_direct_mem_ptr(tlm::tlm_generic_payload & trans, tlm::tlm_dmi & dmi_data) {
         sc_dt::uint64 masked_address;
         sc_dt::uint64 address = trans.get_address();
         sc_dt::uint64 dmi_start_address = dmi_data.get_start_address();
@@ -75,13 +74,13 @@ SC_MODULE (Router) {
     }
 
     // Simple fixed address decoding
-    inline unsigned int decode_address(sc_dt::uint64& address, sc_dt::uint64& masked_address) {
+    inline unsigned int decode_address(sc_dt::uint64 & address, sc_dt::uint64 & masked_address) {
         unsigned int target = static_cast<unsigned int>((address >> 8) & 0x3);
         masked_address = address & 0xFF;
         return target;
     }
 
-    inline unsigned int encode_address(unsigned int target, sc_dt::uint64& address) {
+    inline unsigned int encode_address(unsigned int target, sc_dt::uint64 &address) {
         return (target << 8) | (address & 0xFF);
     }
 
@@ -92,4 +91,4 @@ SC_MODULE (Router) {
     }
 };
 
-#endif //ROUTER_H
+#endif // ROUTER_H

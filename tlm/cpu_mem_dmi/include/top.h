@@ -11,11 +11,11 @@
 #include "memory.h"
 #include <systemc.h>
 
-SC_MODULE (Top) {
-    Cpu* cpu;
-    Memory* memory;
+SC_MODULE(Top) {
+    Cpu *cpu;
+    Memory *memory;
 
-    SC_CTOR (Top) {
+    SC_CTOR(Top) {
         cpu = new Cpu("cpu");
         memory = new Memory("memory");
 
@@ -28,4 +28,4 @@ SC_MODULE (Top) {
     }
 };
 
-#endif //TOP_H
+#endif // TOP_H

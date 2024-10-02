@@ -6,14 +6,14 @@
 
 #include "pe.h"
 #include "pe_tb.h"
-#include <ctime>
 #include <cstdlib>
+#include <ctime>
 #include <systemc.h>
 
-sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<sc_int<8>>& activation_in,
-                                sc_signal<sc_int<32>>& partial_sum_in, sc_signal<sc_int<8>>& activation_out,
-                                sc_signal<sc_int<32>>& partial_sum_out) {
-    sc_trace_file* fp = sc_create_vcd_trace_file(file);
+sc_trace_file *create_vcd_trace(const char *file, sc_clock &clk, sc_signal<sc_int<8>> &activation_in,
+                                sc_signal<sc_int<32>> &partial_sum_in, sc_signal<sc_int<8>> &activation_out,
+                                sc_signal<sc_int<32>> &partial_sum_out) {
+    sc_trace_file *fp = sc_create_vcd_trace_file(file);
 
     sc_trace(fp, clk, "clk");
     sc_trace(fp, activation_in, "activation_in");
@@ -24,8 +24,8 @@ sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<sc_in
     return fp;
 }
 
-void simulate_pe(const sc_int<8>& weight, const char* file) {
-    sc_trace_file* fp;
+void simulate_pe(const sc_int<8> &weight, const char *file) {
+    sc_trace_file *fp;
     sc_clock clk("clk", 10, SC_NS, 0.5, 1, SC_NS);
 
     sc_signal<sc_int<8>> activation_in;
@@ -57,10 +57,10 @@ void simulate_pe(const sc_int<8>& weight, const char* file) {
     SC_REPORT_INFO("sc_main", "Simulation ends");
 }
 
-int sc_main(int argc, char** argv) {
+int sc_main(int argc, char **argv) {
     const sc_int<8> weight = 4;
-    const char* vcd_file = "pe";
-    const char* log_file = "pe.log";
+    const char *vcd_file = "pe";
+    const char *log_file = "pe.log";
 
     srand(time(nullptr));
     sc_report_handler::set_log_file_name(log_file);

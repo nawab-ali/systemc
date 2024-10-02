@@ -4,13 +4,13 @@
  * @author Nawab Ali
  */
 
-#include <systemc.h>
 #include "two_four_decoder.h"
 #include "two_four_decoder_tb.h"
+#include <systemc.h>
 
-sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& enable, sc_signal<sc_uint<2>>& input,
-                                sc_signal<sc_uint<4>>& output) {
-    sc_trace_file* fp = sc_create_vcd_trace_file(file);
+sc_trace_file *create_vcd_trace(const char *file, sc_signal<bool> &enable, sc_signal<sc_uint<2>> &input,
+                                sc_signal<sc_uint<4>> &output) {
+    sc_trace_file *fp = sc_create_vcd_trace_file(file);
 
     sc_trace(fp, enable, "enable");
     sc_trace(fp, input, "input");
@@ -20,7 +20,7 @@ sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& enable, sc_si
 }
 
 void simulate_two_four_decoder() {
-    sc_trace_file* fp;
+    sc_trace_file *fp;
     sc_signal<bool> enable;
     sc_signal<sc_uint<2>> input;
     sc_signal<sc_uint<4>> output;
@@ -42,7 +42,7 @@ void simulate_two_four_decoder() {
     sc_close_vcd_trace_file(fp);
 }
 
-int sc_main(int argc, char** argv) {
+int sc_main(int argc, char **argv) {
     simulate_two_four_decoder();
     return 0;
 }

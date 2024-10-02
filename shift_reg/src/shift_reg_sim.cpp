@@ -7,9 +7,9 @@
 #include "shift_reg.h"
 #include "shift_reg_tb.h"
 
-sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<bool>& din, sc_signal<bool>& r0,
-                                sc_signal<bool>& r1, sc_signal<bool>& r2, sc_signal<bool>& r3) {
-    sc_trace_file* fp = sc_create_vcd_trace_file(file);
+sc_trace_file *create_vcd_trace(const char *file, sc_clock &clk, sc_signal<bool> &din, sc_signal<bool> &r0,
+                                sc_signal<bool> &r1, sc_signal<bool> &r2, sc_signal<bool> &r3) {
+    sc_trace_file *fp = sc_create_vcd_trace_file(file);
     fp->set_time_unit(1, SC_NS);
 
     sc_trace(fp, clk, "clk");
@@ -23,7 +23,7 @@ sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<bool>
 }
 
 void simulate_shift_reg() {
-    sc_trace_file* fp;
+    sc_trace_file *fp;
     sc_signal<bool> din;
     sc_signal<bool> r0, r1, r2, r3;
     sc_clock clk("clk", 10, SC_NS, 0.5);
@@ -46,7 +46,7 @@ void simulate_shift_reg() {
     sc_close_vcd_trace_file(fp);
 }
 
-int sc_main(int argc, char** argv) {
+int sc_main(int argc, char **argv) {
     simulate_shift_reg();
     return 0;
 }

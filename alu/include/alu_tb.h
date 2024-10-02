@@ -9,12 +9,12 @@
 
 #include <systemc.h>
 
-SC_MODULE (alu_tb) {
+SC_MODULE(alu_tb) {
     sc_in<bool> clk;
     sc_out<sc_uint<3>> opcode;
     sc_out<sc_uint<4>> operand1, operand2;
 
-    SC_CTOR (alu_tb) {
+    SC_CTOR(alu_tb) {
         SC_THREAD(gen_stimuli);
         dont_initialize();
         sensitive << clk.pos();
@@ -34,4 +34,4 @@ SC_MODULE (alu_tb) {
     }
 };
 
-#endif //ALU_TB_H
+#endif // ALU_TB_H

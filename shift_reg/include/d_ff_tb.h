@@ -9,11 +9,11 @@
 
 #include <systemc.h>
 
-SC_MODULE (d_ff_tb) {
+SC_MODULE(d_ff_tb) {
     sc_in<bool> clk;
     sc_out<bool> din;
 
-    SC_CTOR (d_ff_tb) {
+    SC_CTOR(d_ff_tb) {
         SC_THREAD(generate_stimuli);
         dont_initialize();
         sensitive << clk.pos();
@@ -38,4 +38,4 @@ SC_MODULE (d_ff_tb) {
     }
 };
 
-#endif //D_FF_TB_H
+#endif // D_FF_TB_H

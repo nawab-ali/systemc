@@ -4,13 +4,13 @@
  * @author Nawab Ali
  */
 
-#include <systemc.h>
 #include "four_bit_adder.h"
 #include "four_bit_adder_tb.h"
+#include <systemc.h>
 
-sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& c_in, sc_signal<sc_uint<4>>& a,
-                                sc_signal<sc_uint<4>>& b, sc_signal<sc_uint<4>>& sum, sc_signal<bool>& c_out) {
-    sc_trace_file* fp = sc_create_vcd_trace_file(file);
+sc_trace_file *create_vcd_trace(const char *file, sc_signal<bool> &c_in, sc_signal<sc_uint<4>> &a,
+                                sc_signal<sc_uint<4>> &b, sc_signal<sc_uint<4>> &sum, sc_signal<bool> &c_out) {
+    sc_trace_file *fp = sc_create_vcd_trace_file(file);
 
     sc_trace(fp, c_in, "c_in");
     sc_trace(fp, a, "a");
@@ -22,7 +22,7 @@ sc_trace_file* create_vcd_trace(const char* file, sc_signal<bool>& c_in, sc_sign
 }
 
 void simulate_four_bit_adder() {
-    sc_trace_file* fp;
+    sc_trace_file *fp;
     sc_signal<bool> c_in, c_out;
     sc_signal<sc_uint<4>> a, b, sum;
     sc_clock clk("clk", 10, SC_NS, 0.5);
@@ -45,7 +45,7 @@ void simulate_four_bit_adder() {
     sc_close_vcd_trace_file(fp);
 }
 
-int sc_main(int argc, char** argv) {
+int sc_main(int argc, char **argv) {
     simulate_four_bit_adder();
     return 0;
 }

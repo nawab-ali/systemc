@@ -8,10 +8,10 @@
 #include "alu_tb.h"
 #include <systemc.h>
 
-sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<sc_uint<3>>& opcode,
-                                sc_signal<sc_uint<4>>& operand1, sc_signal<sc_uint<4>>& operand2,
-                                sc_signal<sc_uint<4>>& result, sc_signal<bool>& carry, sc_signal<bool>& zero) {
-    sc_trace_file* fp = sc_create_vcd_trace_file(file);
+sc_trace_file *create_vcd_trace(const char *file, sc_clock &clk, sc_signal<sc_uint<3>> &opcode,
+                                sc_signal<sc_uint<4>> &operand1, sc_signal<sc_uint<4>> &operand2,
+                                sc_signal<sc_uint<4>> &result, sc_signal<bool> &carry, sc_signal<bool> &zero) {
+    sc_trace_file *fp = sc_create_vcd_trace_file(file);
 
     sc_trace(fp, clk, "clk");
     sc_trace(fp, opcode, "opcode");
@@ -25,7 +25,7 @@ sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk, sc_signal<sc_ui
 }
 
 void simulate_alu() {
-    sc_trace_file* fp;
+    sc_trace_file *fp;
     sc_signal<sc_uint<3>> opcode;
     sc_signal<sc_uint<4>> operand1, operand2;
     sc_signal<sc_uint<4>> result;
@@ -52,7 +52,7 @@ void simulate_alu() {
     sc_close_vcd_trace_file(fp);
 }
 
-int sc_main(int argc, char** argv) {
+int sc_main(int argc, char **argv) {
     simulate_alu();
     return 0;
 }

@@ -4,22 +4,21 @@
  * @author Nawab Ali
  */
 
-#include <ctime>
-#include <string>
-#include <cstdlib>
-#include <systemc.h>
 #include "systolic_array.h"
 #include "systolic_array_tb.h"
+#include <cstdlib>
+#include <ctime>
+#include <string>
+#include <systemc.h>
 
 const uint8_t N = 4;
 
-sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk,
-                                sc_vector<sc_signal<sc_int<8>>>& activation_in,
-                                sc_vector<sc_signal<sc_int<32>>>& partial_sum_in,
-                                sc_vector<sc_signal<sc_int<8>>>& activation_out,
-                                sc_vector<sc_signal<sc_int<32>>>& partial_sum_out) {
+sc_trace_file *create_vcd_trace(const char *file, sc_clock &clk, sc_vector<sc_signal<sc_int<8>>> &activation_in,
+                                sc_vector<sc_signal<sc_int<32>>> &partial_sum_in,
+                                sc_vector<sc_signal<sc_int<8>>> &activation_out,
+                                sc_vector<sc_signal<sc_int<32>>> &partial_sum_out) {
     string name;
-    sc_trace_file* fp = sc_create_vcd_trace_file(file);
+    sc_trace_file *fp = sc_create_vcd_trace_file(file);
 
     sc_trace(fp, clk, "clk");
 
@@ -37,8 +36,8 @@ sc_trace_file* create_vcd_trace(const char* file, sc_clock& clk,
     return fp;
 }
 
-void simulate_systolic_array(const char* file) {
-    sc_trace_file* fp;
+void simulate_systolic_array(const char *file) {
+    sc_trace_file *fp;
     sc_clock clk("clk", 10, SC_NS, 0.5, 1, SC_NS);
 
     sc_vector<sc_signal<sc_int<8>>> activation_in{"activation_in", N};
@@ -71,9 +70,9 @@ void simulate_systolic_array(const char* file) {
     SC_REPORT_INFO("sc_main", "Simulation ends");
 }
 
-int sc_main(int argc, char** argv) {
-    const char* vcd_file = "systolic_array";
-    const char* log_file = "systolic_array.log";
+int sc_main(int argc, char **argv) {
+    const char *vcd_file = "systolic_array";
+    const char *log_file = "systolic_array.log";
 
     srand(time(nullptr));
     sc_report_handler::set_log_file_name(log_file);

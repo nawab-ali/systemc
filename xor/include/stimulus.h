@@ -9,36 +9,36 @@
 
 #include <systemc.h>
 
-SC_MODULE (stimulus) {
-	sc_in<bool> clk;
-	sc_out<bool> output_1;
-	sc_out<bool> output_2;
+SC_MODULE(stimulus) {
+    sc_in<bool> clk;
+    sc_out<bool> output_1;
+    sc_out<bool> output_2;
 
-	SC_CTOR (stimulus) {
-		SC_THREAD(generate_stimuli);
-		dont_initialize();
-		sensitive << clk.pos();
-	}
+    SC_CTOR(stimulus) {
+        SC_THREAD(generate_stimuli);
+        dont_initialize();
+        sensitive << clk.pos();
+    }
 
-	void generate_stimuli() {
-		output_1.write(false);
-		output_2.write(false);
-		wait();
+    void generate_stimuli() {
+        output_1.write(false);
+        output_2.write(false);
+        wait();
 
-		output_1.write(false);
-		output_2.write(true);
-		wait();
+        output_1.write(false);
+        output_2.write(true);
+        wait();
 
-		output_1.write(true);
-		output_2.write(false);
-		wait();
+        output_1.write(true);
+        output_2.write(false);
+        wait();
 
-		output_1.write(true);
-		output_2.write(true);
-		wait();
+        output_1.write(true);
+        output_2.write(true);
+        wait();
 
-		sc_stop();
-	}
+        sc_stop();
+    }
 };
 
-#endif //STIMULUS_H
+#endif // STIMULUS_H

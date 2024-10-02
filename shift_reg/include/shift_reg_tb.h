@@ -9,11 +9,11 @@
 
 #include <systemc.h>
 
-SC_MODULE (shift_reg_tb) {
+SC_MODULE(shift_reg_tb) {
     sc_in<bool> clk;
     sc_out<bool> din;
 
-    SC_CTOR (shift_reg_tb) {
+    SC_CTOR(shift_reg_tb) {
         SC_THREAD(generate_stimuli);
         dont_initialize();
         sensitive << clk.pos();
@@ -38,4 +38,4 @@ SC_MODULE (shift_reg_tb) {
     }
 };
 
-#endif //SHIFT_REG_TB_H
+#endif // SHIFT_REG_TB_H
